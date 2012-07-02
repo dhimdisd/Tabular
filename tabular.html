@@ -1,17 +1,31 @@
 <html>
 <head>
-	<title>tab-ular</title>
-	<style >
+	<title></title>
+	<style type="text/css">
 		body{
-			min-width: 375px;
+			width : 400px;
+			max-height: 600px;
+			overflow: scroll;
+			text-decoration: none;
+			
 		}
-	</style>
-	<script src="tabular.js"></script>
-</head>
-	<body>
-	<div id="display">
+		#tabsList {
+			list-style-type: none;
+			padding: 0;
+			margin: auto;
+		}
+		li {
+			padding: 5px;
+			border: outset;
+			font-size: 15px;
+			text-align: center;
+		}
 		
-	</div>
-
+	</style>
+</head>
+<body>
+	<ul id="tabsList"></ul>
 </body>
+<script src="jquery-1.7.2.min.js"></script>
+<script src="tabular.js"></script>
 </html>

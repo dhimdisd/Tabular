@@ -8,7 +8,12 @@
   },
   "permissions": [
     "tabs"
-  ],
+  ], 
+
+  // "permissions": [
+  //   "notifications"
+  // ],
+
   "background": {
     // "scripts": ["background.js"],
     "page": "background.html"

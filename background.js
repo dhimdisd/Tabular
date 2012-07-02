@@ -16,13 +16,8 @@ chrome.tabs.onCreated.addListener(function (tab){
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 	// if (changeInfo.hasOwnProperty('url')){
-		console.log(tab);
+		// console.log(tab);
 		changeTabInfo(tab);
-	// }
-	// else {
-	// 	// console.log(changeInfo);
-	// }
-	
 });
 
 chrome.tabs.onRemoved.addListener(function(tabId, removeInfo){
@@ -39,6 +34,7 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
 		chrome.tabs.query({
 			'windowId': windowId, 
 			'active' : true}, function (tabArray){
+				console.log(tabArray[0].id);
 				switchTabToFront(tabArray[0]);
 			})
 		// chrome.tabs.getSelected(windowId, function(tab){
@@ -48,6 +44,21 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
 });
 //-------------------------------------------------------------------------
 
+// chrome.windows.create({ 
+// 	'url': '' 
+// 	'type': 'panel',
+// 	'focused' : true,
+// 	'width': 300,
+// 	'height': 500
+// 	}, 
+// 	function (window){
+// 		console.log(window);
+// 	}
+// );
+// var notification = webkitNotifications.createHTMLNotification( 'notification.html');
+// notification.show();
+
+//-----------------------------------------------
 function setUpList (){
 	chrome.tabs.query({}, function(tabArray){
 		for(var tab in tabArray){
@@ -55,14 +66,6 @@ function setUpList (){
 		}
 	});
 }
-
-function putTabs(tabArray){
-	$('#tabsList').html('');
-	for(var tab in tabArray){
-		addToList(tabArray[tab]);
-	}
-}
-
 
 function addToList(tab){
 	var tabElement = '<li id="' +tab.id +'" >' + tab.title + '</li>';
@@ -96,7 +99,6 @@ function itemsIntoTabArray(){
 }
 
 function changeList(){
-
 	var tabArray = [];
 	$('li').each(function(){
 		tabArray.push($(this).text());
@@ -106,15 +108,9 @@ function changeList(){
 	return array;
 }
 
-function putOnTop(tab, tabArray){
-	var id= tab.id;
-	for (var i = 0; i < tabArray.length; i++) {
-		if  (tabArray[i].id == id ) {
-			tabArray.splice(i,1);
-			break;
-		}
-	}
-	tabArray.splice(0,0 ,tab);
-
-	return tabArray;
+function addEventToTab(){
+	
+}
+function getTabs(){
+	return $('li').clone();
 }

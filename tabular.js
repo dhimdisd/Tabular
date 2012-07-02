@@ -1,28 +1,21 @@
-var arrayTabs = new Array();
-// chrome.tabs.onActivated.addListener(function(info){
-// 	chrome.tabs.get(info.tabId, function(tab){
-// 		arrayTabs.push(tab.title);
-// 	});	
-// });
-// chrome.browserAction.setPopup("background.html");
 
 function init(){
-	var body = document.getElementById('display');
-	body.innerHTML += "<p>Hello World</p>";
-	chrome.tabs.query({ 'currentWindow': true }, function(tabArray){
+	// console.log("hello");
+	var bg = chrome.extension.getBackgroundPage();
+	$('#tabsList').append(bg.getTabs());
+	// var doc = chrome.extension.getBackgroundPage().document;
+	// console.log($(doc).find('li'));
+	// $('#tabsList').append($(doc).find('li'));
+
+	// console.log(chrome.extension.getBackgroundPage().document);
+	// window.location.href = "chrome-extension://fiibiiflmgmifcfkdemgepcgjiememej/background.html";
+	 // $(window.document).replaceWith(chrome.extension.getBackgroundPage().document.$());	
+}
+
+// function (listItems){
+// 	for(li in listItems){
 		
-	});
-	var views = chrome.extension.getViews();
-	console.log(views);
-	// console.log(chrome.extension.getBackgroundPage());
-
-}
-
-
-function sendRequest(){
-	chrome.extension.sendRequest({ req: arrayTabs} , function(response){
-		console.log(response);
-	});
-}
+// 	}
+// }
 document.addEventListener('DOMContentLoaded', init);
 
