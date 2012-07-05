@@ -1,37 +1,78 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
 
-var req = new XMLHttpRequest();
-req.open(
-    "GET",
-    "http://api.flickr.com/services/rest/?" +
-        "method=flickr.photos.search&" +
-        "api_key=90485e931f687a9b9c2a66bf58a3861a&" +
-        "text=hello%20world&" +
-        "safe_search=1&" +  // 1 is "safe"
-        "content_type=1&" +  // 1 is "photos only"
-        "sort=relevance&" +  // another good one is "interestingness-desc"
-        "per_page=20",
-    true);
-req.onload = showPhotos;
-req.send(null);
+function init(){
+	var bp = chrome.extension.getBackgroundPage();
+	$('#tabsList').append(bp.getTabs());
+	removeThisTab();
+	$('li:nth-child(2)').addClass('highlighted');
+	document.searchForm.search.focus();
+}
+//Get it started
 
-function showPhotos() {
-  var photos = req.responseXML.getElementsByTagName("photo");
-
-  for (var i = 0, photo; photo = photos[i]; i++) {
-    var img = document.createElement("image");
-    img.src = constructImageURL(photo);
-    document.body.appendChild(img);
-  }
+//add some key events
+document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('keydown', keyOpenWindow, false);
+function keyOpenWindow (e){
+	if(e.keyCode == 13){
+		var id = parseInt($('.highlighted:first').attr('id'));
+		chrome.tabs.update(id, {'active': true}, function(activeTab){});
+	}
+	else if(e.keyCode == 40){
+		moveDown();
+	}	
+	else if (e.keyCode == 38) {
+		moveUp();
+	}
+	else if (e.metaKey && (e.keyCode == 74)){
+		moveDown();	
+	}
+	else if (e.metaKey && (e.keyCode == 75)){
+		moveUp();
+	}
+	else if (e.metaKey && (e.keyCode == 68)){
+		var id = parseInt($('.highlighted:first').attr('id'));
+		chrome.tabs.remove([id]);
+		moveDown().prev().remove();
+	}
 }
 
-// See: http://www.flickr.com/services/api/misc.urls.html
-function constructImageURL(photo) {
-  return "http://farm" + photo.getAttribute("farm") +
-      ".static.flickr.com/" + photo.getAttribute("server") +
-      "/" + photo.getAttribute("id") +
-      "_" + photo.getAttribute("secret") +
-      "_s.jpg";
+
+$(window).blur(function(){
+	window.close();	
+});
+
+function moveDown(){
+	$highlighted = $('.highlighted');
+	if ($highlighted.is(':last-child')){
+		$highlighted.removeClass('highlighted').siblings().first().addClass('highlighted');
+		$('html, body').animate({scrollTop:0}, 50);
+	}
+	else {
+		 $newHighlighted= $highlighted.removeClass('highlighted').next().addClass('highlighted');
+	}
+	return $newHighlighted;
 }
+
+function moveUp(){
+	$highlighted = $('.highlighted');
+	if ($highlighted.is(':first-child')){
+		$highlighted.removeClass('highlighted').siblings().last().addClass('highlighted');
+		$('html, body').animate({scrollTop: $('#tabsList').height()}, 50);
+	}
+	else {
+		$highlighted.removeClass('highlighted').prev().addClass('highlighted');
+	}	
+}
+
+function removeThisTab(){
+	$firstList = $('li:first-child .title');
+	// var bp = chrome.extension.getBackgroundPage();
+	// bp.consoleThis($firstList);
+	if ($firstList.html() == "" || ($firstList.html()=="tabular"){
+		$firstList.parent().remove();
+	}
+}
+
+
+// $(document).bind('keydown', 'esc', function() {
+//     window.close();
+//  });
