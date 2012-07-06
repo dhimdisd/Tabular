@@ -6,6 +6,7 @@
 //chrome extensions command
 chrome.tabs.onActivated.addListener(function(activeInfo) {
 	chrome.tabs.get(activeInfo.tabId, function(tab){
+		if($("#" + tab.id) != 0)
 		switchTabToFront(tab);
 	});
 });
@@ -30,11 +31,11 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
 		chrome.tabs.query({
 			'windowId': windowId, 
 			'active' : true}, function (tabArray){
+				if($("#" + tabArray[0].id) != 0)
 				switchTabToFront(tabArray[0]);
 			});
 	}
 });
-
 
 //-------------------------------------------------------------------------
 
@@ -50,7 +51,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
 //---------------------------------------------------------------
 
-
 // document.addEventListener('keydown', keyOpenWindow, false);
 function keyOpenWindow (){
 	chrome.windows.create({ 
@@ -64,11 +64,9 @@ function keyOpenWindow (){
 			// 'tabular': true
 		}, 
 		function (createdWindow){
-			
 		}
 	);
 }
-
 
 //-----------------------------------------------
 function setUpList (){
@@ -82,8 +80,9 @@ function setUpList (){
 function addToList(tab){
 	//add li element
 	var tabElement = '<li id="' +tab.id +'" >'
-	tabElement += addFavIconElement(tab);
-	tabElement += addTitle(tab);
+	tabElement += addFavIconElement(tab); //adds the icon of the tab
+	tabElement += addTitle(tab) + '</li>';  //adds the title
+
 	// var regExpUrl = /chrome*/;
 	// //add image tag
 	// if(tab.favIconUrl && (tab.favIconUrl.length > 0) && !regExpUrl.test(tab.favIconUrl)){

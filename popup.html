@@ -1,3 +1,4 @@
+<!-- 2012, Dan Dhimdis -->
 <html>
 <head>
 	<title>tabular</title>
@@ -7,6 +8,7 @@
 			max-height: 600px;
 			overflow: scroll;
 			text-decoration: none;
+			background-color: #5986ef
 			
 		}
 		form{
@@ -28,6 +30,7 @@
 			font-size: 13px;
 			text-align: center;
 			overflow: hidden;
+			background-color: white;
 		}
 		img {
 			height: 15px;
@@ -59,11 +62,11 @@
 </head>
 <body>
 	<form name="searchForm">
-		<input id="search" autocomplete="off" name="search" type="text" onKeyPress="searchField(event)"/>
+		<input id="searchBox" autocomplete="off" name="search" type="text" />
 	</form>
 	<ul id="tabsList"></ul>
 </body>
 <script src="jquery-1.7.2.min.js"></script>
 <script src="popup.js"></script>
-<script src="search.js"></script>	
+<!-- <script src="search.js"></script>	 -->
 </html>
