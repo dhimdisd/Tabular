@@ -3,7 +3,7 @@
 	setUpList();
 })();
 
-//chrome extensions command
+//chrome extensions command---------------------------------
 chrome.tabs.onActivated.addListener(function(activeInfo) {
 	chrome.tabs.get(activeInfo.tabId, function(tab){
 		if($("#" + tab.id) != 0)
@@ -48,7 +48,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	}
 });
 
-
 //---------------------------------------------------------------
 
 // document.addEventListener('keydown', keyOpenWindow, false);
@@ -77,23 +76,13 @@ function setUpList (){
 	});
 }
 
+//------------add tags to the document----------- 
 function addToList(tab){
-	//add li element
 	var tabElement = '<li id="' +tab.id +'" >'
 	tabElement += addFavIconElement(tab); //adds the icon of the tab
 	tabElement += addTitle(tab) + '</li>';  //adds the title
-
-	// var regExpUrl = /chrome*/;
-	// //add image tag
-	// if(tab.favIconUrl && (tab.favIconUrl.length > 0) && !regExpUrl.test(tab.favIconUrl)){
-	// 	tabElement += '<img src="'+ tab.favIconUrl + '"/>'
-	// }
-	// //add title element
-	// tabElement += '<div class="title">' + tab.title + '</div></li>';
 	$('#tabsList').prepend(tabElement);
 	addEventToTab(tab);
-	// var list = document.getElementById('tabsList');
-	// list.innerHTML+= '<li id="' +tab.id +'" >' + tab.title + '</li>';	
 }
 
 function changeTabInfo(tab){
@@ -105,6 +94,7 @@ function changeTabInfo(tab){
 	// var element = document.getElementById(tab.id);
 	// element.innerHTML = tab.title;
 }
+
 function switchTabToFront(tab){
 	var element = "#" + tab.id;
 	$('#tabsList').prepend($(element).detach());
@@ -123,7 +113,7 @@ function addEventToTab(tab){
 //-------------------------------------------
 function addFavIconElement(tab){
 	var tabElement;
-	if(tab.favIconUrl && (tab.favIconUrl.length > 0) && !/chrome*/.test(tab.favIconUrl)){
+	if(tab.favIconUrl && (tab.favIconUrl.length > 0) && !/chrome.*/.test(tab.favIconUrl)){
 		tabElement = '<img alt="" src="'+ tab.favIconUrl + '"/>'
 		return tabElement;
 	}
@@ -135,7 +125,7 @@ function addTitle(tab){
 	return '<div class="title">' + tab.title + '</div>';
 }
 //-----------------------------------------------------
-
+//make a copy of the tabs when popup opened
 function getTabs(){
 	return $('li').clone(true);
 }

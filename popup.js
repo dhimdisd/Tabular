@@ -5,12 +5,14 @@ function init(){
 	removeThisTab();
 	$('li:nth-child(2)').addClass('highlighted');
 	document.searchForm.search.focus();
+	
+	//window closes when its not in focus
 	$(window).blur(function(){
 		window.close();	
 	});
 }
-//Get it started
 
+//--------------------functionality for navigating------------
 function moveDown(){
 	$highlighted = $('.highlighted');
 	if ($highlighted.is('#tabsList > li:visible:last')){
@@ -41,7 +43,7 @@ function removeThisTab(){
 	}
 }
 
-//add some key events
+//-------------add some key events--------------------------------------------
 document.addEventListener('DOMContentLoaded', init);
 document.addEventListener('keydown', keyOpenWindow, false);
 function keyOpenWindow (e){
@@ -81,12 +83,17 @@ function keyOpenWindow (e){
 // $(document).bind('keydown', 'esc', function() {
 //     window.close();
 //  });
-
+//------------------------Added Search features-------------------------
 document.addEventListener('DOMContentLoaded', function () {
   // document.querySelector('input').addEventListener('keypress', startSearch);
   $('#searchBox').on('input', startSearch);
 });
-
+var searchTimeout;
+function startSearch(e) {
+	// searchField(e);
+    if (searchTimeout != undefined) clearTimeout(searchTimeout);
+    	searchTimeout = setTimeout(searchField, 500);
+}
 
 function searchField(){
 	var searchVal = $('#searchBox').val();
@@ -106,15 +113,10 @@ function searchField(){
 	});
 	$('.highlighted').removeClass('highlighted');
 	$('#tabsList > li:visible:first').addClass('highlighted');
-
 }
 
-var searchTimeout;
-function startSearch(e) {
-	// searchField(e);
-    if (searchTimeout != undefined) clearTimeout(searchTimeout);
-    	searchTimeout = setTimeout(searchField, 500);
-}
+
+
 
 
  
