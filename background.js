@@ -49,8 +49,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 });
 
 //---------------------------------------------------------------
+// When the content script is activated it calls this function
+//it is called in the function above
 
-// document.addEventListener('keydown', keyOpenWindow, false);
 function keyOpenWindow (){
 	chrome.windows.create({ 
 			'url': 'popup.html', 
@@ -91,8 +92,6 @@ function changeTabInfo(tab){
 	$tabElement = $('#' + tab.id);
 	$tabElement.empty();
 	$tabElement.prepend(tabDetail);
-	// var element = document.getElementById(tab.id);
-	// element.innerHTML = tab.title;
 }
 
 function switchTabToFront(tab){
@@ -124,12 +123,9 @@ function addFavIconElement(tab){
 function addTitle(tab){
 	return '<div class="title">' + tab.title + '</div>';
 }
+
 //-----------------------------------------------------
 //make a copy of the tabs when popup opened
 function getTabs(){
 	return $('li').clone(true);
 }
-
-// function consoleThis(obj){
-// 	console.log(obj);
-// }
