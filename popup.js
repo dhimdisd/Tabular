@@ -1,14 +1,29 @@
 function init() {
-	var bp = chrome.extension.getBackgroundPage();
-	$('#tabsList').append(bp.getTabs());
-	removeThisTab();
-	$('li:nth-child(2)').addClass('highlighted');
-	document.searchForm.search.focus();
 
-	// window closes when its not in focus
+
+	var bp = chrome.extension.getBackgroundPage();
+	var tabsList = bp.getTabs();
+	addTabs(tabsList);
+
+	// $('li:nth-child(2)').addClass('highlighted');
+	// 	document.searchForm.search.focus();
+
+	// document.addEventListener("webkitvisibilitychange", handleVisibilityChange, false);
+	// function handleVisibilityChange(){
+	// 	if (document.webkitHidden){
+	// 		chrome.tabs.getCurrent(function(tab) {
+	// 			chrome.tabs.remove(tab.id);
+	// 		});
+	// 	}
+	// }
+	// // window closes when its not in focus
 	$(window).blur(function() {
+		// chrome.tabs.getCurrent(function(tab) {
+		// 	chrome.tabs.remove(tab.id);
+		// });
 		window.close();
 	});
+	// window.onblur = function (){ this.close(); };
 }
 
 //--------------------functionality for navigating------------
@@ -37,15 +52,32 @@ function moveUp() {
 	}
 }
 
-function removeThisTab() {
-	$firstList = $('li:first-child .title');
-	if ($firstList.html() == "" || ($firstList.html() == "tabular")) {
-		$firstList.parent().remove();
-	}
+function addTabs(tabsList) {
+
+	chrome.tabs.getCurrent(function(tab) {
+		//if not popup
+		if (tab !== undefined){
+			//	removethistab
+			var element = "#" + tab.id;
+			tabsList = tabsList.not(element);	
+		}
+
+		tabsList.eq(1).addClass('highlighted');
+		$('#tabsList').append(tabsList);
+		// $('li:nth-child(2)').addClass('highlighted');
+		document.searchForm.search.focus();
+		$('#searchBox').on('input', startSearch);
+	});
+
+
+
 }
 
 //-------------add some key events--------------------------------------------
-document.addEventListener('DOMContentLoaded', init);
+window.onload = function() {
+	init();
+};
+// document.addEventListener('DOMContentLoaded', init);
 document.addEventListener('keydown', keyOpenWindow, false);
 
 function keyOpenWindow(e) {
@@ -97,9 +129,10 @@ function keyOpenWindow(e) {
 //  });
 //------------------------Added Search features-------------------------
 
-document.addEventListener('DOMContentLoaded', function() {
-	$('#searchBox').on('input', startSearch);
-});
+
+// document.addEventListener('DOMContentLoaded', function() {
+// 	$('#searchBox').on('input', startSearch);
+// });
 var searchTimeout;
 var strictSearch = false;
 
@@ -126,3 +159,12 @@ function searchField() {
 	$('.highlighted').removeClass('highlighted');
 	$('#tabsList > li:visible:first').addClass('highlighted');
 }
+
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	if (request === "PopUp") {
+		chrome.tabs.getCurrent(function(tab) {
+			sendResponse(tab);
+		});
+	}
+});

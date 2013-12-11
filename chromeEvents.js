@@ -1,9 +1,3 @@
-//--------------------initializing the list when the extension loads up-----
-
-(function() {
-	setUpList();
-})();
-
 //---------------------chrome tabs functions---------------------------------
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
@@ -41,42 +35,6 @@ chrome.windows.onFocusChanged.addListener(function(windowId) {
 });
 
 //-------------------------------------------------------------------------
-
-//gets message from content script
-chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-	if (request === "openKeyPressed") {
-		chrome.runtime.sendMessage("PopUp", function(res){
-			if(res === undefined)
-				keyOpenWindow();
-			else{
-				chrome.tabs.remove(res.id, function(){
-					keyOpenWindow();
-				}); 
-			}
-		});
-	} else {
-		sendResponse({});
-	}
-});
-
-//---------------------------------------------------------------
-// When the content script is activated it calls this function
-//it is called in the function above
-
-function keyOpenWindow() {
-
-	chrome.windows.create({
-		'url': 'popup.html',
-		'type': 'popup',
-		'focused': true,
-		'width': 430,
-		'top': 100,
-		'left': 400,
-		'height': 600
-		// 'tabular': true
-	});
-}
-
 //-----------------------------------------------
 
 function setUpList() {
@@ -144,10 +102,4 @@ function addFavIconElement(tab) {
 
 function addTitle(tab) {
 	return '<div class="title">' + tab.title + '</div>';
-}
-
-//-----------------------------------------------------
-//make a copy of the tabs when popup opened
-function getTabs() {
-	return $('li').clone(true);
 }
