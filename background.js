@@ -45,13 +45,13 @@ chrome.windows.onFocusChanged.addListener(function(windowId) {
 //gets message from content script
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	if (request === "openKeyPressed") {
-		chrome.runtime.sendMessage("PopUp", function(res){
-			if(res === undefined)
+		chrome.runtime.sendMessage("PopUp", function(res) {
+			if (res === undefined)
 				keyOpenWindow();
-			else{
-				chrome.tabs.remove(res.id, function(){
+			else {
+				chrome.tabs.remove(res.id, function() {
 					keyOpenWindow();
-				}); 
+				});
 			}
 		});
 	} else {
@@ -149,5 +149,28 @@ function addTitle(tab) {
 //-----------------------------------------------------
 //make a copy of the tabs when popup opened
 function getTabs() {
+	removeUnkownTabs();
 	return $('li').clone(true);
+
+}
+
+//Added this because some tabs were getting stuck
+//Fix for right now
+function removeUnkownTabs() {
+	chrome.tabs.query({}, function(tabArray) {
+		//loop through all list elements
+		for (var i = 0; i < $('li').length; i++) {
+			var id = parseInt($('li').eq(i).attr('id'));
+			var inTabs = false;
+			for (tab in tabArray) {
+				if (tabArray[tab].id === id) {
+					inTabs = true;
+					break;
+				}
+			}
+			if (inTabs === false) {
+				$('li').eq(i).remove();
+			}
+		}
+	});
 }

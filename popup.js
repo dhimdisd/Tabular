@@ -91,7 +91,9 @@ function keyOpenWindow(e) {
 			chrome.windows.update(tab.windowId, {
 				'focused': true
 			});
+			window.close();
 		});
+
 
 	} else if (e.keyCode == 40) { //down key
 		moveDown();

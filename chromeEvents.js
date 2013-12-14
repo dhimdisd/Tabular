@@ -69,7 +69,7 @@ function addToList(tab) {
 			chrome.windows.update(tab.windowId, {
 				'focused': true
 			});
-
+			window.close();
 		});
 	}
 }
