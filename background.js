@@ -148,21 +148,19 @@ function addTitle(tab) {
 
 //-----------------------------------------------------
 //make a copy of the tabs when popup opened
-function getTabs() {
-	removeUnkownTabs();
-	return $('li').clone(true);
-
+function getTabs(callback) {
+	removeUnkownTabs(callback);
 }
 
 //Added this because some tabs were getting stuck
 //Fix for right now
-function removeUnkownTabs() {
+function removeUnkownTabs(callback) {
 	chrome.tabs.query({}, function(tabArray) {
 		//loop through all list elements
 		for (var i = 0; i < $('li').length; i++) {
 			var id = parseInt($('li').eq(i).attr('id'));
 			var inTabs = false;
-			for (tab in tabArray) {
+			for (var tab in tabArray) {
 				if (tabArray[tab].id === id) {
 					inTabs = true;
 					break;
@@ -172,5 +170,7 @@ function removeUnkownTabs() {
 				$('li').eq(i).remove();
 			}
 		}
-	});
+    callback($('li').clone(true));
+
+  });
 }
