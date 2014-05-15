@@ -1,7 +1,7 @@
+//add search functionality
 (function() {
 
     document.searchForm.search.focus();
-    //add search functionality
     $('#searchBox').on('input', startSearch);
 
     var searchTimeout;
@@ -40,12 +40,6 @@
 
     function getNonExactRegex(searchString) {
 
-        searchString = searchString.replace(/ /g, '');
-        var charSearch = searchString.split('');
-        for (var chars in charSearch) {
-            charSearch[chars] += ".*";
-        }
-        searchString = charSearch.join('');
         var regExp = new RegExp(searchString, 'i');
         return regExp;
     }
