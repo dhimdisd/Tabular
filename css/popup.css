@@ -1,0 +1,79 @@
+body {
+    font-size: 0.75em;
+    font-family: sans-serif;
+    margin: 0;
+    width: 300px;
+}
+
+form {
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    left: 0;
+    margin-bottom: 0;
+    padding: 0.5em;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+form > input {
+    box-sizing: border-box;
+    padding-left: 0.5em;
+    height: 2em;
+    font-size: 1.3em;
+    width: 100%;
+}
+
+#tabsList {
+    list-style-type: none;
+    margin: 3.5em 0 0 0;
+    padding: 0.5em;
+}
+
+#tabsList > li {
+    background-color: #fefefe;
+
+    border-bottom: 3px solid #e3e3e3;
+    border-left: 1px solid #e3e3e3;
+    border-right: 2px solid #e3e3e3;
+    border-top: 1px solid #e3e3e3;
+
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    margin-top: 0.5em;
+    padding: 0.5em;
+}
+
+.favIconContainer {
+    display: table-cell;
+}
+
+.tabDetails {
+    display: table-cell;
+}
+
+.tabDetails .title,
+.tabDetails .url {
+    word-break: break-word;
+}
+
+#tabsList > li img {
+    height: 15px;
+    float: left;
+    margin-right: 1em;
+    width: 15px;
+}
+
+#tabsList > li .title {
+    display: table-cell;
+}
+
+#tabsList > li.highlighted {
+    background-color: #4c4c4c;
+    border-color: #222;
+    color: #fff;
+}
