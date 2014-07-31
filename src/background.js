@@ -9,17 +9,19 @@
     };
   }
 
+  var notInternalTab = complement(isInternalTab);
+
   chrome.tabs.query({}, function(tabs) {
     w.tabs =
       tabs
-        .filter(complement(isInternalTab))
+        .filter(notInternalTab)
         .sort(function(a, b) {
           return b.index - a.index;
         });
   });
 
   chrome.tabs.onCreated.addListener(function(tab) {
-    if (!isInternalTab(tab)) {
+    if (notInternalTab(tab)) {
       w.tabs.unshift(tab);
       chrome.runtime.sendMessage({ event: 'tabCreated' }, function(res) {});
     }
@@ -37,12 +39,12 @@
   });
 
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    var i = 0;
-    while (tabId !== w.tabs[i].id) {
-      ++i;
+    for (var i = 0; i < w.tabs.length; i++) {
+      if (tab.index === w.tabs[i].index && notInternalTab(tab)) { // why index i have no clue
+        w.tabs[i] = tab;
+        break;
+      }
     }
-
-    w.tabs[i] = tab;
 
     chrome.runtime.sendMessage({
       event: 'tabUpdated',
@@ -52,37 +54,20 @@
 
   chrome.tabs.onActivated.addListener(function(activeInfo) {
     chrome.tabs.get(activeInfo.tabId, function(tab) {
-      var i = 0;
+      for (var i = 0; i < w.tabs.length; i++) {
+        if (tab.id === w.tabs[i].id) {
+          w.tabs.splice(i, 1)[0];
+          w.tabs.unshift(tab);
 
-      while (tab.id !== w.tabs[i].id) {
-        ++i;
+          chrome.runtime.sendMessage({
+            event: 'tabActivated',
+            tabId: tab.id
+          });
+
+          break;
+        }
       }
-      w.tabs.splice(i, 1)[0];
-      w.tabs.unshift(tab);
-
-      chrome.runtime.sendMessage({
-        event: 'tabActivated',
-        tabId: tab.id
-      })
     });
-  });
-
-  chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request === 'openKeyPressed') {
-      chrome.windows.create({
-        url: 'popup.html',
-        type: 'popup',
-        focused: true,
-        width: 300,
-        height: 500,
-        left: (screen.width / 2) - 150,
-        top: (screen.height / 2) - 250
-      }, function(popupWindow) {
-        w.popupWindowId = popupWindow.id;
-      });
-    } else {
-      sendResponse({});
-    }
   });
 
   chrome.windows.onFocusChanged.addListener(function(windowId) {
@@ -90,6 +75,26 @@
       chrome.windows.remove(w.popupWindowId, function() {
         w.popupWindowId = null;
       });
+    }
+  });
+
+  chrome.commands.onCommand.addListener(function(command) {
+    if (command === 'showTabularPopup') {
+      if (w.popupWindowId == null) {
+        chrome.windows.create({
+          url: 'popup.html',
+          type: 'popup',
+          focused: true,
+          width: 300,
+          height: 500,
+          left: (screen.width / 2) - 150,
+          top: (screen.height / 2) - 250
+        }, function(popupWindow) {
+          w.popupWindowId = popupWindow.id;
+        });
+      } else {
+        chrome.windows.remove(w.popupWindowId, function() {});
+      }
     }
   });
 })(window);

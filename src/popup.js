@@ -7,12 +7,12 @@
 
     var Tab = React.createClass({
       handleClick: function(event) {
+        chrome.windows.update(this.props.data.windowId, { 'focused': true });
+
         chrome.tabs.update(this.props.data.id, {
           'active': true,
           'highlighted': true
         });
-
-        chrome.windows.update(this.props.data.windowId, { 'focused': true });
       },
       handleMouseOver: function(event) {
         $(this.getDOMNode())
@@ -61,6 +61,12 @@
     } else {
       $tabList.find('li:nth(0)').addClass('highlighted');
     }
+
+    w.addEventListener('keydown', function(e) {
+      if (e.keyCode === 27) { // escape key
+        chrome.windows.remove(bp.popupWindowId, function() {});
+      }
+    });
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       switch (request.event) {
