@@ -2,7 +2,7 @@ body {
     font-size: 0.75em;
     font-family: sans-serif;
     margin: 0;
-    width: 300px;
+    width: 450px;
 }
 
 form {
@@ -54,6 +54,7 @@ form > input {
 
 .tabDetails {
     display: table-cell;
+    vertical-align: top;
 }
 
 .tabDetails .title,
@@ -62,10 +63,10 @@ form > input {
 }
 
 #tabsList > li img {
-    height: 15px;
+    height: 32px;
     float: left;
     margin-right: 1em;
-    width: 15px;
+    width: 32px;
 }
 
 #tabsList > li .title {

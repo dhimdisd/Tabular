@@ -85,10 +85,10 @@
           url: 'popup.html',
           type: 'popup',
           focused: true,
-          width: 300,
-          height: 500,
-          left: (screen.width / 2) - 150,
-          top: (screen.height / 2) - 250
+          width: 450,
+          height: 600,
+          left: (screen.width / 2) - 225,
+          top: (screen.height / 2) - 300
         }, function(popupWindow) {
           w.popupWindowId = popupWindow.id;
         });

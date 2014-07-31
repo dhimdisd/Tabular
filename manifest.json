@@ -1,12 +1,10 @@
 {
-  "name": "tabular",
+  "name": "Tabular",
   "version": "1.0",
   "manifest_version": 2,
-  "description": "The first extension that I made.",
+  "description": "Easily search open tabs",
   "permissions": [
-    "tabs",
-    "http://*/",
-    "https://*/"
+    "tabs"
   ],
   "background": {
     "scripts": ["js/background.js"]
@@ -20,7 +18,12 @@
     }
   },
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "icon16.png",
     "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   }
 }
