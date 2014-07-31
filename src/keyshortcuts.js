@@ -82,16 +82,19 @@ $(function() {
               || (e.ctrlKey && e.keyCode == KeyCode.K)) {
 
       moveUp();
+
+    // remove all visible tabs
     } else if (e.metaKey && e.shiftKey && (e.keyCode == KeyCode.D)) {
-      var $tabListItems = $('#tabsList > li');
+      var $tabListItems = $('#tabsList > li:visible');
       var tabIds =
         $tabListItems
           .map(function() { return parseInt(this.id, 10); })
           .toArray();
 
-      chrome.tabs.remove(tabIds);
-      $tabListItems.remove();
-      document.getElementById('searchBox').value = '';
+      chrome.tabs.remove(tabIds, function() {
+        $tabListItems.remove();
+        location.reload(true);
+      });
 
     // remove tab
     } else if (e.metaKey && (e.keyCode == KeyCode.D)
@@ -99,11 +102,11 @@ $(function() {
             || (e.keyCode == KeyCode.DELETE)) {
 
       var $oldHighlighted = $('.highlighted');
-      chrome.tabs.remove(parseInt($oldHighlighted.attr('id'), 10));
-
-      //move highleted down and delete previous tab
-      moveDown();
-      $oldHighlighted.remove();
+      chrome.tabs.remove(parseInt($oldHighlighted.attr('id'), 10), function() {
+        //move highleted down and delete previous tab
+        moveDown();
+        $oldHighlighted.remove();
+      });
     }
   }, false);
 });

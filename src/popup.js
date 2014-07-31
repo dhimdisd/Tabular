@@ -20,6 +20,14 @@
           .siblings()
           .removeClass('highlighted');
       },
+      closeTab: function(event) {
+        event.stopPropagation();
+        chrome.tabs.remove(this.props.data.id, function() {
+          //move highleted down and delete previous tab
+          moveDown();
+          $(this.getDOMNode()).remove();
+        });
+      },
       render: function() {
         var tab = (
           <li
@@ -29,9 +37,10 @@
 
             <div className="favIconContainer"><img src={this.props.data.favIconUrl}/></div>
             <section className="tabDetails">
-              <h2 className="title">{this.props.data.title}</h2>
+              <h3 className="title">{this.props.data.title}</h3>
               <p className="url">{this.props.data.url}</p>
             </section>
+            <div className="close-btn" onClick={this.closeTab}></div>
           </li>
         );
 
@@ -75,7 +84,12 @@
         case 'tabUpdated':
         case 'tabActivated':
           fetchTabs();
-          React.renderComponent(<TabList data={w.tabs} />, tabListContainer);
+          if (w.tabs.length) {
+            React.renderComponent(<TabList data={w.tabs} />, tabListContainer);
+          } else {
+            window.close();
+          }
+          break;
         default:
           break;
       }

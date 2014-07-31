@@ -44,17 +44,39 @@ form > input {
     border-top-right-radius: 5px;
     border-bottom-left-radius: 5px;
 
+    box-sizing: border-box;
+    display: table;
     margin-top: 0.5em;
     padding: 0.5em;
+    width: 100%;
 }
 
 .favIconContainer {
     display: table-cell;
+    width: 32px;
 }
 
 .tabDetails {
     display: table-cell;
     vertical-align: top;
+}
+
+.close-btn {
+    color: #e3e3e3;
+    display: table-cell;
+    font-size: 1.2em;
+    height: 16px;
+    text-align: center;
+    vertical-align: top;
+    width: 16px;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+.close-btn:after {
+    content: '✖';
 }
 
 .tabDetails .title,
