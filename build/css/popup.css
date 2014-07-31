@@ -61,14 +61,19 @@ form > input {
     vertical-align: top;
 }
 
-.close-btn {
-    color: #e3e3e3;
+.close-btn-container {
     display: table-cell;
-    font-size: 1.2em;
-    height: 16px;
     text-align: center;
     vertical-align: top;
     width: 16px;
+}
+
+.close-btn {
+    color: #e3e3e3;
+    font-size: 1.2em;
+    height: 16px;
+    text-align: center;
+    width: 100%;
 }
 
 .close-btn:hover {

@@ -5,7 +5,7 @@
 
     var bp = chrome.extension.getBackgroundPage();
 
-    var Tab = React.createClass({displayName: 'Tab',
+    var Tab = React.createClass({
       handleClick: function(event) {
         chrome.windows.update(this.props.data.windowId, { 'focused': true });
 
@@ -30,31 +30,33 @@
       },
       render: function() {
         var tab = (
-          React.DOM.li({
-            id: this.props.data.id, 
-            onClick: this.handleClick, 
-            onMouseOver: this.handleMouseOver}, 
+          <li
+            id={this.props.data.id}
+            onClick={this.handleClick}
+            onMouseOver={this.handleMouseOver}>
 
-            React.DOM.div({className: "favIconContainer"}, React.DOM.img({src: this.props.data.favIconUrl})), 
-            React.DOM.section({className: "tabDetails"}, 
-              React.DOM.h3({className: "title"}, this.props.data.title), 
-              React.DOM.p({className: "url"}, this.props.data.url)
-            ), 
-            React.DOM.div({className: "close-btn", onClick: this.closeTab})
-          )
+            <div className="favIconContainer"><img src={this.props.data.favIconUrl}/></div>
+            <section className="tabDetails">
+              <h3 className="title">{this.props.data.title}</h3>
+              <p className="url">{this.props.data.url}</p>
+            </section>
+            <div className="close-btn-container">
+              <div className="close-btn" onClick={this.closeTab}></div>
+            </div>
+          </li>
         );
 
         return tab;
       }
     });
 
-    var TabList = React.createClass({displayName: 'TabList',
+    var TabList = React.createClass({
       render: function() {
         var tabs = this.props.data.map(function(tab) {
-          return Tab({data: tab});
+          return <Tab data={tab} />;
         });
 
-        return React.DOM.ul({id: "tabsList"}, tabs);
+        return <ul id="tabsList">{tabs}</ul>;
       }
     });
 
@@ -62,7 +64,7 @@
 
     // initialize tab list view
     fetchTabs();
-    React.renderComponent(TabList({data: w.tabs}), tabListContainer);
+    React.renderComponent(<TabList data={w.tabs} />, tabListContainer);
 
     var $tabList = $('#tabsList');
     if ($tabList.find('li:nth(1)').length > 1) {
@@ -85,7 +87,7 @@
         case 'tabActivated':
           fetchTabs();
           if (w.tabs.length) {
-            React.renderComponent(TabList({data: w.tabs}), tabListContainer);
+            React.renderComponent(<TabList data={w.tabs} />, tabListContainer);
           } else {
             window.close();
           }

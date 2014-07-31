@@ -82,7 +82,7 @@
     if (command === 'showTabularPopup') {
       if (w.popupWindowId == null) {
         chrome.windows.create({
-          url: 'popup.html',
+          url: 'build/popup.html',
           type: 'popup',
           focused: true,
           width: 450,
