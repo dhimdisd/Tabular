@@ -7,13 +7,13 @@ $(function() {
   function searchField() {
     var searchVal = $searchBox.val();
     var searchRgx = new RegExp(searchVal.replace(/(.)/g, '$1' + '.*'), 'i');
+    var $tabList = $('#tabsList');
 
     $tabList.find('li').each(function() {
       var $this = $(this);
       var $title = $this.find('.title');
       var $url = $this.find('.url');
       var titleAndUrl = $title.text() + '``' + $url.text();
-      console.log(titleAndUrl);
       var highlightedText = [];
 
       if (searchRgx.test(titleAndUrl)) {
@@ -26,9 +26,10 @@ $(function() {
       } else {
         $this.hide();
       }
-      $('.highlighted').removeClass('highlighted');
-      $tabList.find('li:first').addClass('highlighted');
     });
+
+    $('.highlighted').removeClass('highlighted');
+    $tabList.find('li:visible:first').addClass('highlighted');
   }
 
   function getFormattedSearchText(searchString, text) {
@@ -53,7 +54,6 @@ $(function() {
   }
 
   var $searchBox = $('#searchBox');
-  var $tabList = $('#tabsList');
   var searchTimeout;
   var strictSearch = false;
 

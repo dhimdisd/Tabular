@@ -2,16 +2,17 @@ $(function() {
   document.addEventListener('keydown', function(e) {
     function moveDown() {
       var $highlighted = $('.highlighted');
-      if ($highlighted.is('#tabsList > li:last')) {
+      if ($highlighted.is('#tabsList > li:visible:last')) {
         $highlighted
           .removeClass('highlighted')
-          .siblings()
+          .siblings(':visible')
           .first()
           .addClass('highlighted');
       } else {
         $highlighted
           .removeClass('highlighted')
-          .next()
+          .nextAll(':visible')
+          .first()
           .addClass('highlighted');
       }
 
@@ -23,16 +24,17 @@ $(function() {
 
     function moveUp() {
       var $highlighted = $('.highlighted');
-      if ($highlighted.is('#tabsList > li:first')) {
+      if ($highlighted.is('#tabsList > li:visible:first')) {
         $highlighted
           .removeClass('highlighted')
-          .siblings()
+          .siblings(':visible')
           .last()
           .addClass('highlighted');
       } else {
         $highlighted
           .removeClass('highlighted')
-          .prev()
+          .prevAll(':visible')
+          .first()
           .addClass('highlighted');
       }
 
