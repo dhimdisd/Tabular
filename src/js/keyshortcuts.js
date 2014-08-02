@@ -85,28 +85,16 @@ $(function() {
 
     // remove all visible tabs
     } else if (e.metaKey && e.shiftKey && (e.keyCode == KeyCode.D)) {
-      var $tabListItems = $('#tabsList > li:visible');
-      var tabIds =
-        $tabListItems
-          .map(function() { return parseInt(this.id, 10); })
-          .toArray();
-
-      chrome.tabs.remove(tabIds, function() {
-        $tabListItems.remove();
-        location.reload(true);
-      });
+      //$('#tabsList > li:visible .close-btn').each(function(index, el) {
+        //$(el).click();
+      //})
 
     // remove tab
     } else if (e.metaKey && (e.keyCode == KeyCode.D)
             || (e.ctrlKey && e.keyCode == KeyCode.D)
             || (e.keyCode == KeyCode.DELETE)) {
 
-      var $oldHighlighted = $('.highlighted');
-      chrome.tabs.remove(parseInt($oldHighlighted.attr('id'), 10), function() {
-        //move highleted down and delete previous tab
-        moveDown();
-        $oldHighlighted.remove();
-      });
+      $('.highlighted .close-btn').click();
     }
   }, false);
 });

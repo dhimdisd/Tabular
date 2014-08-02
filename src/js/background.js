@@ -23,19 +23,17 @@
   chrome.tabs.onCreated.addListener(function(tab) {
     if (notInternalTab(tab)) {
       w.tabs.unshift(tab);
-      chrome.runtime.sendMessage({ event: 'tabCreated' }, function(res) {});
     }
   });
 
   chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
-    w.tabs = w.tabs.filter(function(tab, idx, arr) {
-      return tabId !== tab.id;
-    });
-
-    chrome.runtime.sendMessage({
-      event: 'tabRemoved',
-      tabId: tabId
-    }, function(res) {});
+    for (var i = 0; i < w.tabs.length; i++) {
+      if (tabId === w.tabs[i].id) {
+        w.tabs.splice(i, 1);
+        break;
+      }
+    }
+    console.log('tabRemoved', w.tabs);this.state.tabs
   });
 
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -46,10 +44,6 @@
       }
     }
 
-    chrome.runtime.sendMessage({
-      event: 'tabUpdated',
-      tab: tab
-    }, function(res) {});
   });
 
   chrome.tabs.onActivated.addListener(function(activeInfo) {
@@ -58,12 +52,6 @@
         if (tab.id === w.tabs[i].id) {
           w.tabs.splice(i, 1)[0];
           w.tabs.unshift(tab);
-
-          chrome.runtime.sendMessage({
-            event: 'tabActivated',
-            tabId: tab.id
-          });
-
           break;
         }
       }
