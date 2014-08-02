@@ -1,34 +1,29 @@
 {
-  "name": "tabular",
+  "name": "Tabular",
   "version": "1.0",
   "manifest_version": 2,
-  "description": "The first extension that I made.",
-  "browser_action": {
-    "default_icon": "icon.png"
-  },
-   
-  "permissions": [ 
-    "tabs", 
-    "http://*/",
-    "https://*/"
+  "description": "Easily search open tabs",
+  "permissions": [
+    "tabs"
   ],
- 
-
   "background": {
-    "page": "background.html"
+    "scripts": ["build/js/background.js"]
   },
-
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*", "ftp://*/*"],
-      "all_frames": true,
-      "js": ["contentscript.js"],
-      "run_at": "document_start"
+  "commands": {
+    "showTabularPopup": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K"
+      },
+      "description": "Show Tabular popup"
     }
-  ],
-
+  },
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "build/img/icon16.png",
+    "default_popup": "build/popup.html"
+  },
+  "icons": {
+    "16": "build/img/icon16.png",
+    "48": "build/img/icon48.png",
+    "128": "build/img/icon128.png"
   }
 }

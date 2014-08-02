@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1280"
+   height="1280"
+   id="svg3337"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/Users/Chris/Projects/Tabular/icon16.png"
+   inkscape:export-xdpi="1.125"
+   inkscape:export-ydpi="1.125">
+  <defs
+     id="defs3339" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="1051.9607"
+     inkscape:cy="619.3958"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1440"
+     inkscape:window-height="852"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3345"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="160,880"
+       id="guide3347" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="1120,640"
+       id="guide3349" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="160,160"
+       id="guide3351" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="360,1120"
+       id="guide3353" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3342">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,227.63782)">
+    <path
+       id="rect3379"
+       style="fill:#333333"
+       d="m 546.66666,879.02884 559.99994,0 0,93.33334 -559.99994,0 z m -93.33332,-93.33332 93.33332,0 0,93.33332 -93.33332,0 z m 653.33326,-466.66668 93.3334,0 0,653.33334 -93.3334,0 z m -93.3333,-93.33332 93.3333,0 0,93.33332 -93.3333,0 z m -746.66664,373.33332 93.33334,0 0,93.33334 -93.33334,0 z M 360,692.36218 l 560,0 0,93.33334 -560,0 z m 560,-560 93.3333,0 0,653.33334 -93.3333,0 z m -93.33334,-93.333334 93.33334,0 0,93.333334 -93.33334,0 z m -653.33332,466.666674 560,0 0,93.33332 -560,0 z m 560,-560.000006 93.33332,0 0,653.333326 -93.33332,0 z m -560,-93.333334 560,0 0,93.333334 -560,0 z m -93.33334,0 93.33334,0 0,653.33334 -93.33334,0 z"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/Users/Chris/Projects/Tabular/icon16.png"
+       inkscape:export-xdpi="1.2857143"
+       inkscape:export-ydpi="1.2857143" />
+    <rect
+       style="fill:#d40000"
+       id="rect3381"
+       width="280"
+       height="280"
+       x="313.33331"
+       y="85.695511"
+       inkscape:export-filename="/Users/Chris/Projects/Tabular/icon16.png"
+       inkscape:export-xdpi="1.2857143"
+       inkscape:export-ydpi="1.2857143" />
+  </g>
+</svg>
