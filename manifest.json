@@ -18,12 +18,12 @@
     }
   },
   "browser_action": {
-    "default_icon": "build/icon16.png",
+    "default_icon": "build/img/icon16.png",
     "default_popup": "build/popup.html"
   },
   "icons": {
-    "16": "build/icon16.png",
-    "48": "build/icon48.png",
-    "128": "build/icon128.png"
+    "16": "build/img/icon16.png",
+    "48": "build/img/icon48.png",
+    "128": "build/img/icon128.png"
   }
 }
