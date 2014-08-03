@@ -1,14 +1,27 @@
-Tabular
-======
+# Tabular
+Lost in a sea of too many open tabs? Use Tabular to easly find the tab you're looking for.
 
-This extension was created for those who like to leave tabs open and have trouble organizing them. Tabular gives you a list view of tabs and there are several built in functions in the application.  Also on the top of the application there is a search bar were you can eliminate tabs from the view to specific tabs which you are looking for.  
+## Organization of Tabs
+---
+Tabs are ordered from most recently viewed to least recently used.
 
-Organization of Tabs
--------------------
+![alt screenshot](screenshot.png)
 
-When the extension pops up, It shows the list of tabs in a specific order.  The order is organized in such a way that the most recently used tabs are on top.  When the extension first pops up
+## Key Bindings
+---
+Open:
+Ctrl/Cmd + Shift + K
 
-Controls for tabs
----------------
-I integrated a few shortcuts to make the user experience better.  These shortcuts are intended towards Mac OS users by making use of the command keys.    
+Close:
+Esc
+
+Close selected tab:
+Ctrl/Cmd + D
+
+Move selection up:
+Ctrl/Cmd + K
+
+Move Selection down:
+Ctrl/Cmd + J
+
 
