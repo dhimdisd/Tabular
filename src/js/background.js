@@ -33,7 +33,6 @@
         break;
       }
     }
-    console.log('tabRemoved', w.tabs);this.state.tabs
   });
 
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
