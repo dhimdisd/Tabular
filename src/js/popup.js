@@ -19,8 +19,7 @@
       },
       handleCloseTab: function(event) {
         event.stopPropagation();
-        var _this = this;
-        var app = _this.props.app;
+        var app = this.props.app;
         for (var i = 0; i < app.state.tabs.length; i++) {
           if (this.props.data.id === app.state.tabs[i].id) {
             break;
@@ -53,17 +52,17 @@
             id={data.id}
             onClick={this.handleClick}
             onMouseEnter={this.handleMouseEnter}
-            className={this.props.highlightedId === data.id ? "highlighted" : ""}>
+            className={this.props.highlightedId === data.id ? 'highlighted' : ''}>
 
-            <div className="favIconContainer">
+            <div className='favIconContainer'>
               <img src={data.favIconUrl} />
             </div>
-            <section className="tabDetails">
-              <h3 className="title">{title}</h3>
-              <p className="url">{url}</p>
+            <section className='tabDetails'>
+              <h3 className='title'>{title}</h3>
+              <p className='url'>{url}</p>
             </section>
-            <div className="close-btn-container">
-              <div className="close-btn" onClick={this.handleCloseTab}></div>
+            <div className='close-btn-container'>
+              <div className='close-btn' onClick={this.handleCloseTab}></div>
             </div>
           </li>
         );
@@ -88,7 +87,7 @@
           );
         });
 
-        return <ul id="tabsList">{tabs}</ul>;
+        return <ul id='tabsList'>{tabs}</ul>;
       }
     });
 

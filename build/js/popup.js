@@ -19,8 +19,7 @@
       },
       handleCloseTab: function(event) {
         event.stopPropagation();
-        var _this = this;
-        var app = _this.props.app;
+        var app = this.props.app;
         for (var i = 0; i < app.state.tabs.length; i++) {
           if (this.props.data.id === app.state.tabs[i].id) {
             break;
@@ -53,7 +52,7 @@
             id: data.id, 
             onClick: this.handleClick, 
             onMouseEnter: this.handleMouseEnter, 
-            className: this.props.highlightedId === data.id ? "highlighted" : ""}, 
+            className: this.props.highlightedId === data.id ? 'highlighted' : ''}, 
 
             React.DOM.div({className: "favIconContainer"}, 
               React.DOM.img({src: data.favIconUrl})
