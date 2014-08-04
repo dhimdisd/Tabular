@@ -74,6 +74,8 @@ $(function() {
               || (e.metaKey && (e.keyCode == KeyCode.J))
               || (e.ctrlKey && e.keyCode == KeyCode.J)) {
 
+      e.preventDefault();
+      e.stopPropagation();
       moveDown();
 
     // move highlighted selection down
@@ -81,6 +83,8 @@ $(function() {
               || (e.metaKey && (e.keyCode == KeyCode.K))
               || (e.ctrlKey && e.keyCode == KeyCode.K)) {
 
+      e.preventDefault();
+      e.stopPropagation();
       moveUp();
 
     // remove all visible tabs
@@ -94,6 +98,8 @@ $(function() {
             || (e.ctrlKey && e.keyCode == KeyCode.D)
             || (e.keyCode == KeyCode.DELETE)) {
 
+      e.preventDefault();
+      e.stopPropagation();
       $('.highlighted .close-btn').click();
     }
   }, false);
