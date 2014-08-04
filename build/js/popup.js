@@ -4,6 +4,15 @@
     var bp = chrome.extension.getBackgroundPage();
 
     var Tab = React.createClass({displayName: 'Tab',
+      componentDidUpdate: function() {
+        var node = this.getDOMNode();
+        if (this.props.data.id === this.props.highlightedId
+            && !$(node).isOnScreen()) {
+
+          $(node).goTo();
+
+        }
+      },
       handleClick: function(event) {
         chrome.windows.update(this.props.data.windowId, { 'focused': true });
 
@@ -200,6 +209,105 @@
           matches: newMatches
         });
       },
+      componentDidMount: function() {
+        document.addEventListener('keydown', this.handleKeyDown);
+      },
+      componentWillUnmount: function() {
+        document.removeEventListener('keydown', this.handleKeyDown);
+      },
+      componentDidUpdate: function() {
+        if (!this.state.tabs.length) {
+          window.close();
+        }
+      },
+      handleKeyDown: function(event) {
+        var KeyCode = {
+          ENTER: 13,
+          DOWN: 40,
+          UP: 38,
+          J: 74,
+          K: 75,
+          D: 68,
+          DELETE: 46,
+          ESC: 27
+        };
+
+        var i;
+
+        if (event.keyCode === KeyCode.ENTER) {
+          id = parseInt($('.highlighted').attr('id'), 10);
+          chrome.tabs.get(id, function(tab) {
+            chrome.tabs.update(tab.id, {
+              'active': true,
+              'highlighted': true
+            });
+            chrome.windows.update(tab.windowId, {
+              'focused': true
+            });
+            window.close();
+          });
+
+        // move highlighted selection up
+        } else if ((event.keyCode == KeyCode.UP)
+            || (event.metaKey && event.keyCode == KeyCode.K)
+            || (event.ctrlKey && event.keyCode == KeyCode.K)) {
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          var nextId;
+          for (i = 0; i < this.state.tabs.length; i++) {
+            if (this.state.highlightedId === this.state.tabs[i].id) {
+              if (i - 1 >= 0) {
+                nextId = this.state.tabs[i - 1].id;
+              } else {
+                nextId = this.state.tabs[this.state.tabs.length - 1].id;
+              }
+              break;
+            }
+          }
+          this.setState({
+            highlightedId: nextId
+          });
+
+        // move highlighted selection down
+        } else if ((event.keyCode == KeyCode.DOWN)
+                  || (event.metaKey && event.keyCode == KeyCode.J)
+                  || (event.ctrlKey && event.keyCode == KeyCode.J)) {
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          var nextId;
+          for (i = 0; i < this.state.tabs.length; i++) {
+            if (this.state.highlightedId === this.state.tabs[i].id) {
+              if (i + 1 < this.state.tabs.length) {
+                nextId = this.state.tabs[i + 1].id;
+              } else {
+                nextId = this.state.tabs[0].id;
+              }
+              break;
+            }
+          }
+          this.setState({
+            highlightedId: nextId
+          });
+
+        // remove tab
+        } else if ((event.metaKey && (event.keyCode == KeyCode.D))
+                || (event.ctrlKey && event.keyCode == KeyCode.D)
+                || (event.keyCode == KeyCode.DELETE)) {
+
+          event.preventDefault();
+          event.stopPropagation();
+          document.querySelector('.highlighted .close-btn').click();
+
+        // close popup
+        } else if (event.keyCode === KeyCode.ESC) {
+          chrome.windows.remove(bp.popupWindowId, function() {});
+        }
+
+      },
       render: function() {
         return (
           React.DOM.div({id: "app"}, 
@@ -218,10 +326,5 @@
 
     // start app
     React.renderComponent(App(null), document.body);
-    window.addEventListener('keydown', function(e) {
-      if (e.keyCode === 27) { // escape key
-        chrome.windows.remove(bp.popupWindowId, function() {});
-      }
-    });
   };
 })(window);
