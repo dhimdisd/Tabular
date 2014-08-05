@@ -33,6 +33,8 @@
         break;
       }
     }
+
+    chrome.runtime.sendMessage({ event: 'tabRemoved', tabId: tabId });
   });
 
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {

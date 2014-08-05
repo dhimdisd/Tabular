@@ -224,17 +224,16 @@
             });
 
             _this.setState({ tabs: newTabs });
+          } else if (request.event === 'tabRemoved') {
+            if (!bp.tabs.length) {
+              window.close();
+            }
           }
 
         });
       },
       componentWillUnmount: function() {
         document.removeEventListener('keydown', this.handleKeyDown);
-      },
-      componentDidUpdate: function() {
-        if (!this.state.tabs.length) {
-          window.close();
-        }
       },
       handleKeyDown: function(event) {
         var KeyCode = {
