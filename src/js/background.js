@@ -66,15 +66,20 @@
   });
 
   chrome.commands.onCommand.addListener(function(command) {
+    var width = 450;
+    var platformRgx = new RegExp('win', 'i')
+    if (platformRgx.test(navigator.platform)) {
+      width = 480;
+    }
     if (command === 'showTabularPopup') {
       if (w.popupWindowId == null) {
         chrome.windows.create({
           url: 'build/popup.html',
           type: 'popup',
           focused: true,
-          width: 450,
+          width: width,
           height: 600,
-          left: (screen.width / 2) - 225,
+          left: (screen.width / 2) - (width / 2),
           top: (screen.height / 2) - 300
         }, function(popupWindow) {
           w.popupWindowId = popupWindow.id;
