@@ -21,7 +21,6 @@
           'highlighted': true
         });
 
-        window.close();
       },
       handleMouseEnter: function(event) {
         this.props.onMouseEnterListItem(this.props.data.id);
@@ -259,7 +258,6 @@
             chrome.windows.update(tab.windowId, {
               'focused': true
             });
-            window.close();
           });
 
         // move highlighted selection up
@@ -319,7 +317,11 @@
 
         // close popup
         } else if (event.keyCode === KeyCode.ESC) {
-          chrome.windows.remove(bp.popupWindowId, function() {});
+          if (bp.popupWindowId != null) {
+            chrome.windows.remove(bp.popupWindowId, function() {
+              bp.popupWindowId = null;
+            });
+          }
         }
 
       },

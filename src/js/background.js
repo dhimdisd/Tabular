@@ -89,7 +89,9 @@
           w.popupWindowId = popupWindow.id;
         });
       } else {
-        chrome.windows.remove(w.popupWindowId, function() {});
+        chrome.windows.remove(w.popupWindowId, function() {
+          w.popupWindowId = null;
+        });
       }
     }
   });
