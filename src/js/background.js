@@ -43,6 +43,8 @@
       }
     }
 
+    chrome.runtime.sendMessage({ event: 'tabUpdated', tab: tab });
+
   });
 
   chrome.tabs.onActivated.addListener(function(activeInfo) {
