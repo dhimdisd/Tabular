@@ -5,6 +5,8 @@ var watchify = require('watchify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var concat = require('gulp-concat-sourcemap');
+var streamify = require('gulp-streamify');
+var uglify = require('gulp-uglify');
 
 gulp.task('jquery', function() {
   gulp
@@ -17,11 +19,19 @@ gulp.task('jquery', function() {
     .pipe(gulp.dest('./src/js/lib/build'));
 });
 
-gulp.task('default', ['jquery'], function() {
+gulp.task('background', function() {
+  gulp
+    .src([ './src/js/background.js' ])
+    .pipe(streamify(uglify()))
+    .pipe(gulp.dest('./build/js'));
+});
+
+gulp.task('default', ['jquery', 'background'], function() {
   function rebundle(bundler) {
     return bundler
       .bundle()
       .pipe(source('popup.js'))
+      .pipe(streamify(uglify()))
       .pipe(gulp.dest('./build/js'));
   }
 
