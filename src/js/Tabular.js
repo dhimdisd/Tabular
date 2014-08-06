@@ -13,7 +13,7 @@ module.exports = React.createClass({
     var tabs = bp.tabs;
     return {
       tabs: tabs,
-      highlightedId: tabs[1].id,
+      highlightedId: tabs[1] ? tabs[1].id : tabs[0].id,
       matches: null
     };
   },
