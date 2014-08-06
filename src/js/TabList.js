@@ -10,12 +10,12 @@ module.exports = React.createClass({
       var matches = props.matches ? props.matches[index] : null;
       return (
         <Tab
-        app={props.app}
-        data={tab}
-        highlightedId={props.highlightedId}
-        matches={matches}
-        onCloseTab={props.onCloseTab}
-        onMouseEnterListItem={props.onMouseEnterListItem} />
+          app={props.app}
+          data={tab}
+          highlightedId={props.highlightedId}
+          matches={matches}
+          onCloseTab={props.onCloseTab}
+          onMouseEnterListItem={props.onMouseEnterListItem} />
       );
     });
 

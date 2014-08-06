@@ -11,14 +11,21 @@
 
   var notInternalTab = complement(isInternalTab);
 
-  chrome.tabs.query({}, function(tabs) {
-    w.tabs =
-      tabs
-        .filter(notInternalTab)
-        .sort(function(a, b) {
-          return b.index - a.index;
-        });
-  });
+  w.getTabs = function(cb) {
+    chrome.tabs.query({}, function(tabs) {
+      w.tabs =
+        tabs
+          .filter(notInternalTab)
+          .sort(function(a, b) {
+            return b.index - a.index;
+          });
+      if (cb) {
+        cb(w.tabs);
+      }
+    });
+  }
+
+  w.getTabs();
 
   chrome.tabs.onCreated.addListener(function(tab) {
     if (notInternalTab(tab)) {

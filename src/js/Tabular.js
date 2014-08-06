@@ -10,6 +10,7 @@ var bp = chrome.extension.getBackgroundPage();
 module.exports = React.createClass({
 
   getInitialState: function() {
+    bp.getTabs();
     var tabs = bp.tabs;
     return {
       tabs: tabs,
@@ -106,6 +107,15 @@ module.exports = React.createClass({
         chrome.tabs.update(tab.id, {
           'active': true,
           'highlighted': true
+        }, function() {
+          if (chrome.runtime.lastError) {
+            for (var i = 0; i < bp.tabs.length; i++) {
+              if (id === bp.tabs[i].length) {
+                bp.tabs.splice(i, 1);
+                break;
+              }
+            }
+          }
         });
         chrome.windows.update(tab.windowId, {
           'focused': true
