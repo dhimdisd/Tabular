@@ -1,0 +1,11 @@
+{
+  "version": 3,
+  "file": "jquery.js",
+  "sources": [
+    "src/js/vendor/jquery-2.1.1.min.js",
+    "src/js/lib/jquery.isOnScreen.js",
+    "src/js/lib/jquery.goTo.js"
+  ],
+  "names": [],
+  "mappings": "AAAA;AACA;AACA;AACA;AACA;;ACJA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;;ACtBA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA"
+}

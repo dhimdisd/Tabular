@@ -6,20 +6,33 @@ Tabs are ordered from most recently viewed to least recently used.
 
 ![alt screenshot](screenshot.png)
 
-## Key Bindings
-Open:
+## Shortcuts
+**Open:**  
 Ctrl/Cmd + Shift + K
 
-Close:
+**Close:**  
 Esc
 
-Close selected tab:
+**Close selected tab:**  
 Ctrl/Cmd + D
 
-Move selection up:
-Ctrl/Cmd + K
+**Move highlighted selection up:**  
+Ctrl/Cmd + K  
+or  
+↑
 
-Move Selection down:
-Ctrl/Cmd + J
+**Move highlighted selection down:**  
+Ctrl/Cmd + J  
+or  
+↑
 
+## Building the project
+Make sure you have the latest version of node.
 
+Install dependencies:
+
+    npm install
+
+Build source files (and watch for changes):
+
+    gulp

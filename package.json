@@ -1,0 +1,37 @@
+{
+  "name": "Tabular",
+  "version": "1.0.3",
+  "description": "Lost in a sea of too many open tabs? Use Tabular to easily find the tab you're looking for.",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "react": "~0.11.1",
+    "browserify": "~5.9.1",
+    "gulp": "~3.8.7",
+    "gulp-util": "~3.0.0",
+    "reactify": "~0.14.0",
+    "vinyl-source-stream": "~0.1.1",
+    "watchify": "~1.0.1"
+  },
+  "browser": {
+    "jquery": "./src/js/lib/build/jquery.js"
+  },
+  "browserify": {
+    "transform": [ "browserify-shim" ]
+  },
+  "browserify-shim": {
+    "jquery": "$"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhimdisd/Tabular.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/dhimdisd/Tabular/issues"
+  }
+}
