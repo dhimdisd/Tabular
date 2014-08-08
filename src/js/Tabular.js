@@ -10,7 +10,6 @@ var bp = chrome.extension.getBackgroundPage();
 module.exports = React.createClass({
 
   getInitialState: function() {
-    bp.getTabs();
     var tabs = bp.tabs;
     return {
       tabs: tabs,
