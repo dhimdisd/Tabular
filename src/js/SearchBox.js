@@ -4,27 +4,38 @@ var React = require('react');
 
 var bp = chrome.extension.getBackgroundPage();
 
+String.prototype.matchAll = function(r) {
+  var matches = [];
+  var str = '';
+  var match = null;
+  for (var i = 0; i < this.length; i++) {
+    str = this.slice(i);
+    match = r.exec(str);
+    if (match) {
+      i = str.indexOf(match[0]) + i;
+      matches.push(match[0]);
+    }
+  }
+  return matches;
+};
+
 module.exports = React.createClass({
   searchTimeout: undefined,
 
   handleChange: function(event) {
     function matchedIndices(search, found, text) {
-      var indices = [];
+      var indices = {};
+      var fi = 0;
+      var si = 0;
       var foundIndex = text.indexOf(found);
-      var i = 0;
-      var j = 0;
-      for (i; i < text.length; i++) {
-        if (search[j] && search[j].toUpperCase() === text[i].toUpperCase()) {
-          if (i >= foundIndex && i < foundIndex + found.length) {
-            indices[i] = true;
-            j++;
-          } else {
-            indices[i] = false;
-          }
-        } else {
-          indices[i] = false;
+
+      for (; fi < found.length && si < search.length; fi++) {
+        if (found[fi].toUpperCase() === search[si].toUpperCase()) {
+          indices[fi + foundIndex] = true;
+          si++;
         }
       }
+
       return indices;
     }
 
@@ -32,42 +43,43 @@ module.exports = React.createClass({
     if (_this.searchTimeout !== undefined) clearTimeout(_this.searchTimeout);
     _this.searchTimeout = setTimeout(function() {
       var searchVal = _this.refs.input.getDOMNode().value;
-      var searchRgx = new RegExp(searchVal.replace(/(.)/g, '$1' + '.*?'), 'gi');
+      var searchRgx = new RegExp(
+        searchVal
+          .split('')
+          .map(function(c) { return '.' === c ? '\\.' : c; })
+          .join('.*?'),
+        'i');
 
-      var filtered = [];
+      var matchedTabs = [];
+
       bp.tabs.forEach(function(tab, idx, arr) {
-        var titleMatches = tab.title.match(searchRgx);
-        var urlMatches = tab.url.match(searchRgx);
-        if (!titleMatches) {
-          titleMatches = [];
+        function shortestLength(prev, curr, idx, arr) {
+          return prev.length < curr.length ? prev : curr;
         }
-        if (!urlMatches) {
-          urlMatches = [];
-        }
-        var smallestTitleMatch = '';
-        var smallestUrlMatch = '';
-        if (titleMatches.length || urlMatches.length) {
-          titleMatches.forEach(function(match, idx, arr) {
-            if (0 === idx || match.length < smallestTitleMatch.length) {
-              smallestTitleMatch = match;
-            }
+
+        var bestTitleMatch = '';
+        var bestUrlMatch = '';
+        var tabMatches = [
+          tab.title.matchAll(searchRgx),
+          tab.url.matchAll(searchRgx)
+        ];
+
+        if (tabMatches[0].length || tabMatches[1].length) {
+          tabMatches = tabMatches.map(function(matches) {
+            return matches.length
+              ? matches.reduce(shortestLength, matches[0])
+              : '';
           });
 
-          urlMatches.forEach(function(match, idx, arr) {
-            if (0 === idx || match.length < smallestUrlMatch.length) {
-              smallestUrlMatch = match;
-            }
-          });
-
-          filtered.push({
-            titleMatch: smallestTitleMatch,
-            urlMatch: smallestUrlMatch,
+          matchedTabs.push({
+            titleMatch: tabMatches[0],
+            urlMatch: tabMatches[1],
             tab: tab
           });
         }
       });
 
-      filtered.sort(function(a, b) {
+      matchedTabs.sort(function(a, b) {
         function lenOrMaxVal(s) {
           return s.length ? s.length : Number.MAX_VALUE;
         }
@@ -83,32 +95,22 @@ module.exports = React.createClass({
         return aMinDiff - bMinDiff;
       });
 
-      var filteredTabs = [];
-      var matches = [];
-      filtered.forEach(function(item, idx, arr) {
-        var tab = item.tab;
-        filteredTabs.push(tab);
+      var indices = matchedTabs.map(function(tabInfo, idx, arr) {
+        var tab = tabInfo.tab;
+        var titleMatch = tabInfo.titleMatch;
+        var urlMatch = tabInfo.urlMatch;
 
-        var matchedTitleIndices =
-          item.titleMatch.length
-            ? matchedIndices(searchVal, item.titleMatch, tab.title)
-            : tab.title.split('').map(function(c) { return false; });
-
-        var matchedUrlIndices =
-          item.urlMatch.length
-            ? matchedIndices(searchVal, item.urlMatch, tab.url)
-            : tab.url.split('').map(function(c) { return false; });
-
-        matches.push({
-          matchedTitleIndices: matchedTitleIndices,
-          matchedUrlIndices: matchedUrlIndices
-        })
+        return {
+          matchedTitleIndices: matchedIndices(searchVal, titleMatch, tab.title),
+          matchedUrlIndices: matchedIndices(searchVal, urlMatch, tab.url)
+        };
       });
 
+      var tabs = matchedTabs.map(function(tabInfo) { return tabInfo.tab; });
       _this.props.onInput({
-        tabs: filteredTabs,
-        highlightedId: filteredTabs[0] ? filteredTabs[0].id : null,
-        matches: matches
+        tabs: tabs,
+        highlightedId: tabs[0] ? tabs[0].id : null,
+        matches: indices
       });
     }, 500);
   },
@@ -117,13 +119,12 @@ module.exports = React.createClass({
     return (
       <form>
         <input
-        type='text'
-        placeholder='Search page titles and URLs...'
-        autoFocus='true'
-        ref='input'
-        onChange={this.handleChange} />
+          type='text'
+          placeholder='Search page titles and URLs...'
+          autoFocus='true'
+          ref='input'
+          onChange={this.handleChange} />
       </form>
     );
   }
 });
-

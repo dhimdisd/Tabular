@@ -7,6 +7,9 @@ var source = require('vinyl-source-stream');
 var concat = require('gulp-concat-sourcemap');
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
+var react = require('gulp-react');
 
 gulp.task('jquery', function() {
   gulp
@@ -26,7 +29,15 @@ gulp.task('background', function() {
     .pipe(gulp.dest('./build/js'));
 });
 
-gulp.task('default', ['jquery', 'background'], function() {
+gulp.task('lint', function() {
+  gulp
+    .src([ './src/js/lib/*.js', './src/js/*.js' ])
+    .pipe(react())
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish));
+});
+
+gulp.task('default', ['lint', 'jquery', 'background'], function() {
   function rebundle(bundler) {
     return bundler
       .bundle()
@@ -44,6 +55,12 @@ gulp.task('default', ['jquery', 'background'], function() {
   bundler.transform(reactify);
 
   bundler.on('update', function() {
+    gulp
+      .src([ './src/js/lib/*.js', './src/js/*.js' ])
+      .pipe(react())
+      .pipe(jshint())
+      .pipe(jshint.reporter(stylish));
+
     rebundle(bundler);
   });
 

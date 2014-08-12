@@ -18,6 +18,7 @@ module.exports = React.createClass({
   handleClick: function(event) {
     chrome.windows.update(this.props.data.windowId, { 'focused': true });
 
+    var id = this.props.data.id;
     chrome.tabs.update(this.props.data.id, {
       'active': true,
       'highlighted': true
@@ -103,4 +104,3 @@ module.exports = React.createClass({
   }
 
 });
-

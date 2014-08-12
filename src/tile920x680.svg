@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="920"
+   height="680"
+   id="svg3457"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="tile_920_680.svg"
+   inkscape:export-filename="/Users/Chris/Projects/Tabular/build/img/tile920x680.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs3459">
+    <linearGradient
+       id="linearGradient3406">
+      <stop
+         id="stop3408"
+         offset="0"
+         style="stop-color:#333333;stop-opacity:1;" />
+      <stop
+         id="stop3410"
+         offset="1"
+         style="stop-color:#333333;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3414">
+      <stop
+         id="stop3416"
+         offset="0"
+         style="stop-color:#333333;stop-opacity:1;" />
+      <stop
+         id="stop3418"
+         offset="1"
+         style="stop-color:#333333;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3422">
+      <stop
+         id="stop3424"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop
+         id="stop3426"
+         offset="1"
+         style="stop-color:#000000;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3430">
+      <stop
+         id="stop3432"
+         offset="0"
+         style="stop-color:#333333;stop-opacity:1;" />
+      <stop
+         id="stop3434"
+         offset="1"
+         style="stop-color:#333333;stop-opacity:0;" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="307.68124"
+     inkscape:cy="242.43217"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="852"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3462">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-372.36217)">
+    <rect
+       style="fill:#333333;fill-opacity:1;stroke:#000000;stroke-width:2.24694967;stroke-opacity:0"
+       id="rect3392"
+       width="917.75305"
+       height="677.75305"
+       x="1.1234741"
+       y="373.48566" />
+    <g
+       id="g3582"
+       transform="matrix(0.67995514,0,0,0.67995514,56.800917,182.3337)">
+      <text
+         sodipodi:linespacing="125%"
+         id="text3394"
+         y="876.41425"
+         x="239.07509"
+         style="font-size:259.9475708px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           y="876.41425"
+           x="239.07509"
+           id="tspan3396"
+           sodipodi:role="line">Tabular</tspan></text>
+      <path
+         inkscape:export-ydpi="1.2857143"
+         inkscape:export-xdpi="1.2857143"
+         inkscape:export-filename="/Users/Chris/Projects/Tabular/icon16.png"
+         inkscape:connector-curvature="0"
+         d="m 86.331286,862.69295 100.242514,0 0,16.7071 -100.242514,0 z m -16.707102,-16.70708 16.707102,0 0,16.70708 -16.707102,0 z m 116.949616,-83.53544 16.70707,0 0,116.94962 -16.70707,0 z m -16.7071,-16.7071 16.7071,0 0,16.7071 -16.7071,0 z m -133.656688,66.82834 16.707101,0 0,16.7071 -16.707101,0 z m 16.707101,16.7071 100.242517,0 0,16.7071 -100.242517,0 z m 100.242517,-100.24251 16.70707,0 0,116.94961 -16.70707,0 z m -16.7071,-16.70711 16.7071,0 0,16.70711 -16.7071,0 z m -116.949589,83.53545 100.242519,0 0,16.70707 -100.242519,0 z m 100.242519,-100.24252 16.70707,0 0,116.94959 -16.70707,0 z m -100.242519,-16.7071 100.242519,0 0,16.7071 -100.242519,0 z m -16.7071017,0 16.7071017,0 0,116.94962 -16.7071017,0 z"
+         style="fill:#ffffff"
+         id="path3398" />
+      <rect
+         inkscape:export-ydpi="1.2857143"
+         inkscape:export-xdpi="1.2857143"
+         inkscape:export-filename="/Users/Chris/Projects/Tabular/icon16.png"
+         y="715.35931"
+         x="44.563522"
+         height="50.121262"
+         width="50.121262"
+         id="rect3400"
+         style="fill:#d40000" />
+    </g>
+  </g>
+</svg>

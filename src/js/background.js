@@ -23,7 +23,7 @@
         cb(w.tabs);
       }
     });
-  }
+  };
 
   w.getTabs();
 
@@ -60,7 +60,7 @@
     chrome.tabs.get(activeInfo.tabId, function(tab) {
       for (var i = 0; i < w.tabs.length; i++) {
         if (tab.id === w.tabs[i].id) {
-          w.tabs.splice(i, 1)[0];
+          w.tabs.splice(i, 1);
           w.tabs.unshift(tab);
           break;
         }
@@ -78,7 +78,7 @@
 
   chrome.commands.onCommand.addListener(function(command) {
     var width = 450;
-    var platformRgx = new RegExp('win', 'i')
+    var platformRgx = new RegExp('win', 'i');
     if (platformRgx.test(navigator.platform)) {
       width = 480;
     }

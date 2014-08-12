@@ -99,6 +99,7 @@ module.exports = React.createClass({
     };
 
     var i;
+    var nextId;
 
     if (event.keyCode === KeyCode.ENTER) {
       id = parseInt($('.highlighted').attr('id'), 10);
@@ -123,13 +124,12 @@ module.exports = React.createClass({
 
       // move highlighted selection up
     } else if ((event.keyCode == KeyCode.UP)
-      || (event.metaKey && event.keyCode == KeyCode.K)
-    || (event.ctrlKey && event.keyCode == KeyCode.K)) {
+              || (event.metaKey && event.keyCode == KeyCode.K)
+              || (event.ctrlKey && event.keyCode == KeyCode.K)) {
 
       event.preventDefault();
       event.stopPropagation();
 
-      var nextId;
       for (i = 0; i < this.state.tabs.length; i++) {
         if (this.state.highlightedId === this.state.tabs[i].id) {
           if (i - 1 >= 0) {
@@ -146,13 +146,12 @@ module.exports = React.createClass({
 
       // move highlighted selection down
     } else if ((event.keyCode == KeyCode.DOWN)
-      || (event.metaKey && event.keyCode == KeyCode.J)
-    || (event.ctrlKey && event.keyCode == KeyCode.J)) {
+              || (event.metaKey && event.keyCode == KeyCode.J)
+              || (event.ctrlKey && event.keyCode == KeyCode.J)) {
 
       event.preventDefault();
       event.stopPropagation();
 
-      var nextId;
       for (i = 0; i < this.state.tabs.length; i++) {
         if (this.state.highlightedId === this.state.tabs[i].id) {
           if (i + 1 < this.state.tabs.length) {
@@ -169,8 +168,8 @@ module.exports = React.createClass({
 
       // remove tab
     } else if ((event.metaKey && (event.keyCode == KeyCode.D))
-      || (event.ctrlKey && event.keyCode == KeyCode.D)
-    || (event.keyCode == KeyCode.DELETE)) {
+              || (event.ctrlKey && event.keyCode == KeyCode.D)
+              || (event.keyCode == KeyCode.DELETE)) {
 
       event.preventDefault();
       event.stopPropagation();
@@ -184,13 +183,12 @@ module.exports = React.createClass({
         });
       }
     }
-
   },
 
   render: function() {
     return (
       <div id='app'>
-        <SearchBox onInput={this.handleInput}/>
+        <SearchBox onInput={this.handleInput} />
         <TabList
           app={this}
           data={this.state.tabs}
