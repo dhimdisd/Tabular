@@ -11,7 +11,12 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var react = require('gulp-react');
 
-gulp.task('jquery', function() {
+var jshintOptions = {
+  laxbreak: true,
+  laxcomma: true
+};
+
+gulp.task('concat-jquery', function() {
   gulp
     .src([
       './src/js/vendor/jquery-2.1.1.min.js',
@@ -22,7 +27,7 @@ gulp.task('jquery', function() {
     .pipe(gulp.dest('./src/js/lib/build'));
 });
 
-gulp.task('background', function() {
+gulp.task('uglify-background', function() {
   gulp
     .src([ './src/js/background.js' ])
     .pipe(streamify(uglify()))
@@ -33,11 +38,11 @@ gulp.task('lint', function() {
   gulp
     .src([ './src/js/lib/*.js', './src/js/*.js' ])
     .pipe(react())
-    .pipe(jshint())
+    .pipe(jshint(jshintOptions))
     .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('default', ['lint', 'jquery', 'background'], function() {
+gulp.task('default', ['lint', 'concat-jquery', 'uglify-background'], function() {
   function rebundle(bundler) {
     return bundler
       .bundle()
@@ -58,7 +63,7 @@ gulp.task('default', ['lint', 'jquery', 'background'], function() {
     gulp
       .src([ './src/js/lib/*.js', './src/js/*.js' ])
       .pipe(react())
-      .pipe(jshint())
+      .pipe(jshint(jshintOptions))
       .pipe(jshint.reporter(stylish));
 
     rebundle(bundler);
