@@ -100,9 +100,10 @@ module.exports = React.createClass({
 
     var i;
     var nextId;
+    var highlighted = $('.highlighted');
 
     if (event.keyCode === KeyCode.ENTER) {
-      id = parseInt($('.highlighted').attr('id'), 10);
+      id = parseInt(highlighted.attr('id'), 10);
       chrome.tabs.get(id, function(tab) {
         chrome.tabs.update(tab.id, {
           'active': true,
@@ -130,16 +131,18 @@ module.exports = React.createClass({
       event.preventDefault();
       event.stopPropagation();
 
-      for (i = 0; i < this.state.tabs.length; i++) {
-        if (this.state.highlightedId === this.state.tabs[i].id) {
-          if (i - 1 >= 0) {
-            nextId = this.state.tabs[i - 1].id;
-          } else {
-            nextId = this.state.tabs[this.state.tabs.length - 1].id;
-          }
-          break;
-        }
+      if (!highlighted.is(':first-child')){
+        nextId = parseInt(
+          highlighted.prev().attr('id'), 10
+        );
+        
+      } else {
+        nextId = parseInt(
+          highlighted.parent()
+            .children(':last').attr('id'), 10
+        );
       }
+      
       this.setState({
         highlightedId: nextId
       });
@@ -152,16 +155,18 @@ module.exports = React.createClass({
       event.preventDefault();
       event.stopPropagation();
 
-      for (i = 0; i < this.state.tabs.length; i++) {
-        if (this.state.highlightedId === this.state.tabs[i].id) {
-          if (i + 1 < this.state.tabs.length) {
-            nextId = this.state.tabs[i + 1].id;
-          } else {
-            nextId = this.state.tabs[0].id;
-          }
-          break;
-        }
+      if (!highlighted.is(':last-child')){
+        nextId = parseInt(
+          highlighted.next().attr('id'), 10
+        );
+        
+      } else {
+        nextId = parseInt(
+          highlighted.parent()
+            .children(':first').attr('id') , 10
+        );
       }
+    
       this.setState({
         highlightedId: nextId
       });
@@ -177,7 +182,7 @@ module.exports = React.createClass({
 
       // close popup
     } else if (event.keyCode === KeyCode.ESC) {
-      if (bp.popupWindowId != null) {
+      if (bp.popupWindowId !== null) {
         chrome.windows.remove(bp.popupWindowId, function() {
           bp.popupWindowId = null;
         });

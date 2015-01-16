@@ -66,8 +66,7 @@ module.exports = React.createClass({
 
         if (tabMatches[0].length || tabMatches[1].length) {
           tabMatches = tabMatches.map(function(matches) {
-            return matches.length
-              ? matches.reduce(shortestLength, matches[0])
+            return matches.length ? matches.reduce(shortestLength, matches[0])
               : '';
           });
 
