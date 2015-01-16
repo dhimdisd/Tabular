@@ -35,4 +35,4 @@ Install dependencies:
 
 Build source files (and watch for changes):
 
-    gulp
+    npm run gulp
