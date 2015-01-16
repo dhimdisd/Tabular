@@ -49,14 +49,12 @@ module.exports = React.createClass({
     var id = this.props.data.id;
     this.props.onCloseTab(id, i);
     chrome.tabs.remove(id, function() {
-      if (chrome.runtime.lastError) {
-        for (var i = 0; i < bp.tabs.length; i++) {
-          if (id === bp.tabs[i].length) {
-            bp.tabs.splice(i, 1);
-            break;
-          }
+       for (var i = 0; i < bp.tabs.length; i++) {
+        if (id === bp.tabs[i].length) {
+          bp.tabs.splice(i, 1);
+          break;
         }
-      }
+       }
     });
   },
 

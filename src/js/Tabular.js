@@ -10,7 +10,9 @@ var bp = chrome.extension.getBackgroundPage();
 module.exports = React.createClass({
 
   getInitialState: function() {
-    var tabs = bp.tabs;
+    //get tabs that we only want to display
+    var tabs = bp.tabs.filter(bp.notInternalTab);
+
     return {
       tabs: tabs,
       highlightedId: tabs[1] ? tabs[1].id : tabs[0].id,
@@ -61,25 +63,25 @@ module.exports = React.createClass({
   componentDidMount: function() {
     document.addEventListener('keydown', this.handleKeyDown);
     var _this = this;
-    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-      var newTabs = [];
-      if (request.event === 'tabUpdated') {
-        newTabs = _this.state.tabs.map(function(tab, index, arr) {
-          if (request.tab.id === tab.id) {
-            return request.tab;
-          } else {
-            return tab;
-          }
-        });
+    // chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    //   var newTabs = [];
+    //   if (request.event === 'tabUpdated') {
+    //     newTabs = _this.state.tabs.map(function(tab, index, arr) {
+    //       if (request.tab.id === tab.id) {
+    //         return request.tab;
+    //       } else {
+    //         return tab;
+    //       }
+    //     });
 
-        _this.setState({ tabs: newTabs });
-      } else if (request.event === 'tabRemoved') {
-        if (!bp.tabs.length) {
-          window.close();
-        }
-      }
+    //     _this.setState({ tabs: newTabs });
+    //   } else if (request.event === 'tabRemoved') {
+    //     if (!bp.tabs.length) {
+    //       window.close();
+    //     }
+    //   }
 
-    });
+    // });
   },
 
   componentWillUnmount: function() {

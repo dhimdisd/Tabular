@@ -1,7 +1,10 @@
 (function(w) {
-  function isInternalTab(tab) {
+  var isInternalTab = function(tab) {
     return /^chrome-(devtools|extension)/.test(tab.url);
   }
+  // var isNotPopURL = function (tab){
+  //   return /build/popup.html/
+  // }
 
   function complement(f) {
     return function() {
@@ -9,13 +12,13 @@
     };
   }
 
-  var notInternalTab = complement(isInternalTab);
+  w.notInternalTab = complement(isInternalTab);
 
   w.getTabs = function(cb) {
     chrome.tabs.query({}, function(tabs) {
       w.tabs =
         tabs
-          .filter(notInternalTab)
+          // .filter(notInternalTab)
           .sort(function(a, b) {
             return b.index - a.index;
           });
@@ -27,45 +30,46 @@
 
   w.getTabs();
 
-  chrome.tabs.onCreated.addListener(function(tab) {
-    if (notInternalTab(tab)) {
-      w.tabs.unshift(tab);
+  function indexOfTab(tabId) {
+    for(var i = 0; i < w.tabs.length; i++) {
+      if(tabId === w.tabs[i].id) {
+        return i;
+      }
     }
+    return -1;
+  }
+
+  chrome.tabs.onCreated.addListener(function(tab) {
+      w.tabs.unshift(tab);
   });
 
   chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
-    for (var i = 0; i < w.tabs.length; i++) {
-      if (tabId === w.tabs[i].id) {
-        w.tabs.splice(i, 1);
-        break;
-      }
-    }
-
-    chrome.runtime.sendMessage({ event: 'tabRemoved', tabId: tabId });
+      var index = indexOfTab(tabId);
+      if (index >= 0){
+        w.tabs.splice(index, 1);
+      } 
+      // chrome.runtime.sendMessage({ event: 'tabRemoved', tabId: tabId });
   });
 
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    for (var i = 0; i < w.tabs.length; i++) {
-      if (tab.index === w.tabs[i].index && notInternalTab(tab)) { // why index i have no clue
-        w.tabs[i] = tab;
-        break;
-      }
+    var index = indexOfTab(tabId);
+    if (index >= 0){
+      w.tabs[index] = tab;
+    } else {
+      w.tabs.push(tab);
     }
-
-    chrome.runtime.sendMessage({ event: 'tabUpdated', tab: tab });
-
+    // chrome.runtime.sendMessage({ event: 'tabUpdated', tab: tab });
   });
 
   chrome.tabs.onActivated.addListener(function(activeInfo) {
-    chrome.tabs.get(activeInfo.tabId, function(tab) {
-      for (var i = 0; i < w.tabs.length; i++) {
-        if (tab.id === w.tabs[i].id) {
-          w.tabs.splice(i, 1);
-          w.tabs.unshift(tab);
-          break;
-        }
-      }
-    });
+    var index = indexOfTab(activeInfo.tabId);
+    if (index >= 0){
+      var tab = w.tabs[index];
+      tabs.splice(index,1);
+      tabs.unshift(tab);
+    } else {
+      w.tabs.unshift(tab);
+    }
   });
 
   chrome.windows.onFocusChanged.addListener(function(windowId) {
@@ -76,6 +80,7 @@
     }
   });
 
+  //Listens for Key to popup app
   chrome.commands.onCommand.addListener(function(command) {
     var width = 450;
     var platformRgx = new RegExp('win', 'i');
