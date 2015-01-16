@@ -77,7 +77,10 @@
       tabs.splice(index,1);
       tabs.unshift(tab);
     } else {
-      w.tabs.unshift(tab);
+      chrome.tabs.get(activeInfo.tabId, function(tab) {
+        if(tab)
+          w.tabs.unshift(tab);
+      });
     }
   });
 
