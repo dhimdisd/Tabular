@@ -107,7 +107,7 @@ module.exports = React.createClass({
     if (event.keyCode === KeyCode.ENTER) {
       id = parseInt(highlighted.attr('id'), 10);
       chrome.tabs.get(id, function(tab) {
-        if (tab){
+        if (!chrome.runtime.lastError && tab){
           chrome.tabs.update(tab.id, {
             'active': true,
             'highlighted': true

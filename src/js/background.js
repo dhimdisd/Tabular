@@ -1,7 +1,7 @@
 (function(w) {
   var isInternalTab = function(tab) {
     return !tab || /^chrome-(devtools|extension)/.test(tab.url);
-  }
+  };
   // var isNotPopURL = function (tab){
   //   return /build/popup.html/
   // }
@@ -19,7 +19,7 @@
         break;
       }
     }
-  }
+  };
 
   w.notInternalTab = complement(isInternalTab);
 
@@ -56,7 +56,7 @@
       var index = indexOfTab(tabId);
       if (index >= 0){
         w.tabs.splice(index, 1);
-      } 
+      }
       // chrome.runtime.sendMessage({ event: 'tabRemoved', tabId: tabId });
   });
 

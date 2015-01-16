@@ -16,20 +16,26 @@ module.exports = React.createClass({
   },
 
   handleClick: function(event) {
-    chrome.windows.update(this.props.data.windowId, { 'focused': true });
-
+    
+    var tab = this.props.data;
     var id = this.props.data.id;
     chrome.tabs.update(this.props.data.id, {
       'active': true,
       'highlighted': true
     }, function() {
       if (chrome.runtime.lastError) {
+        console.log("Im at the error");
+        //remove unkown tab
         for (var i = 0; i < bp.tabs.length; i++) {
-          if (id === bp.tabs[i].length) {
+          if (id === bp.tabs[i].id) {
             bp.tabs.splice(i, 1);
             break;
           }
         }
+        $('#' + id ).remove();
+      }
+      else {
+        chrome.windows.update(tab.windowId, { 'focused': true });
       }
     });
   },
