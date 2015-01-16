@@ -107,22 +107,34 @@ module.exports = React.createClass({
     if (event.keyCode === KeyCode.ENTER) {
       id = parseInt(highlighted.attr('id'), 10);
       chrome.tabs.get(id, function(tab) {
-        chrome.tabs.update(tab.id, {
-          'active': true,
-          'highlighted': true
-        }, function() {
-          if (chrome.runtime.lastError) {
-            for (var i = 0; i < bp.tabs.length; i++) {
-              if (id === bp.tabs[i].length) {
-                bp.tabs.splice(i, 1);
-                break;
+        if (tab){
+          chrome.tabs.update(tab.id, {
+            'active': true,
+            'highlighted': true
+          }, function() {
+            if (chrome.runtime.lastError) {
+              for (var i = 0; i < bp.tabs.length; i++) {
+                if (!bp.tabs[i] || id === bp.tabs[i].id) {
+                  bp.tabs.splice(i, 1);
+                  if (bp.tabs[i])
+                    break;
+                }
               }
             }
+          });
+          chrome.windows.update(tab.windowId, {
+            'focused': true
+          });
+        }
+        else{
+          for (var i = 0; i < bp.tabs.length; i++) {
+            if (!bp.tabs[i] || id === bp.tabs[i].id) {
+              bp.tabs.splice(i, 1);
+              if(bp.tabs[i])
+                break;
+            }
           }
-        });
-        chrome.windows.update(tab.windowId, {
-          'focused': true
-        });
+        }
       });
 
       // move highlighted selection up

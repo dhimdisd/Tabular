@@ -50,7 +50,7 @@ module.exports = React.createClass({
     this.props.onCloseTab(id, i);
     chrome.tabs.remove(id, function() {
        for (var i = 0; i < bp.tabs.length; i++) {
-        if (id === bp.tabs[i].length) {
+        if (id === bp.tabs[i].id) {
           bp.tabs.splice(i, 1);
           break;
         }

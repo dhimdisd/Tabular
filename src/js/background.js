@@ -1,6 +1,6 @@
 (function(w) {
   var isInternalTab = function(tab) {
-    return /^chrome-(devtools|extension)/.test(tab.url);
+    return !tab || /^chrome-(devtools|extension)/.test(tab.url);
   }
   // var isNotPopURL = function (tab){
   //   return /build/popup.html/
@@ -10,6 +10,15 @@
     return function() {
       return !f.apply(null, arguments);
     };
+  }
+
+  w.removeTab = function (tabId){
+    for (var i = 0; i < w.tabs.length; i++) {
+      if (tabId === w.tabs[i].id) {
+        w.tabs.splice(i, 1);
+        break;
+      }
+    }
   }
 
   w.notInternalTab = complement(isInternalTab);
@@ -32,7 +41,7 @@
 
   function indexOfTab(tabId) {
     for(var i = 0; i < w.tabs.length; i++) {
-      if(tabId === w.tabs[i].id) {
+      if(w.tabs[i] && tabId === w.tabs[i].id) {
         return i;
       }
     }
