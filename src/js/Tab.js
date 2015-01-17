@@ -68,7 +68,8 @@ module.exports = React.createClass({
     var data = this.props.data;
     var matches = this.props.matches;
 
-    var title = data.title.split('').map(function(c, i) {
+    var title = data.title.length > 50 ? data.title.substring(0,50).concat('...') : data.title;
+    title = title.split('').map(function(c, i) {
       if (matches && matches.matchedTitleIndices[i]) {
         return React.DOM.strong({ style: { color: 'red' } }, c);
       } else {
@@ -76,7 +77,9 @@ module.exports = React.createClass({
       }
     });
 
-    var url = data.url.split('').map(function(c, i) {
+
+    var url = data.url.length > 50 ? data.url.substring(0,50).concat('...') : data.url;
+    url = url.split('').map(function(c, i) {
       if (matches && matches.matchedUrlIndices[i]) {
         return React.DOM.strong({ style: { color: 'red' } }, c);
       } else {
