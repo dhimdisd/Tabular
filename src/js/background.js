@@ -38,6 +38,20 @@
   };
 
   w.getFilteredTabs = function(){
+    // var filteredTabs = w.tabs.filter(w.notInternalTab);
+    // function checkIfTabIsInList(tab, tabs){
+    //   var i;
+    //   for (i = 0; i < tabs.length; i++) {
+    //       if (tabs[i] === tab) {
+    //           return true;
+    //       }
+    //   }
+
+    //   return false;
+    // }
+
+    // chrome.tabs.query({}, function(tabs) {
+    // });
     return w.tabs.filter(w.notInternalTab);
   };
 

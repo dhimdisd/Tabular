@@ -11,7 +11,7 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     //get tabs that we only want to display
-    var tabs = bp.tabs.filter(bp.notInternalTab);
+    var tabs = bp.getFilteredTabs();
 
     return {
       tabs: tabs,

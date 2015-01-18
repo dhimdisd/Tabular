@@ -52,7 +52,7 @@ module.exports = React.createClass({
 
       var matchedTabs = [];
 
-      bp.tabs.forEach(function(tab, idx, arr) {
+      bp.getFilteredTabs().forEach(function(tab, idx, arr) {
         function shortestLength(prev, curr, idx, arr) {
           return prev.length < curr.length ? prev : curr;
         }
