@@ -24,7 +24,6 @@ module.exports = React.createClass({
       'highlighted': true
     }, function() {
       if (chrome.runtime.lastError) {
-        console.log("Im at the error");
         //remove unkown tab
         for (var i = 0; i < bp.tabs.length; i++) {
           if (id === bp.tabs[i].id) {
@@ -55,12 +54,14 @@ module.exports = React.createClass({
     var id = this.props.data.id;
     this.props.onCloseTab(id, i);
     chrome.tabs.remove(id, function() {
-       for (var i = 0; i < bp.tabs.length; i++) {
-        if (id === bp.tabs[i].id) {
-          bp.tabs.splice(i, 1);
-          break;
-        }
+      if (chrome.runtime.lastError) {
+        for (var i = 0; i < bp.tabs.length; i++) {
+          if (id === bp.tabs[i].id) {
+            bp.tabs.splice(i, 1);
+            break;
+          }
        }
+      }
     });
   },
 

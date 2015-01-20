@@ -105,11 +105,19 @@
 
   chrome.windows.onFocusChanged.addListener(function(windowId) {
     if (windowId !== w.popupWindowId && typeof w.popupWindowId === 'number') {
+
       chrome.windows.remove(w.popupWindowId, function() {
-        w.popupWindowId = null;
+        if (!chrome.runtime.lastError)
+          w.popupWindowId = null;
       });
     }
-  }); 
+  });
+
+  chrome.windows.onRemoved.addListener(function(windowId){
+    if (windowId === w.popupWindowId && typeof w.popupWindowId === 'number') {
+        w.popupWindowId = null;
+    }
+  });
 
   //Listens for Key to popup app
   chrome.commands.onCommand.addListener(function(command) {
