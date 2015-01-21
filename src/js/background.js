@@ -38,21 +38,43 @@
   };
 
   w.getFilteredTabs = function(){
-    // var filteredTabs = w.tabs.filter(w.notInternalTab);
-    // function checkIfTabIsInList(tab, tabs){
-    //   var i;
-    //   for (i = 0; i < tabs.length; i++) {
-    //       if (tabs[i] === tab) {
-    //           return true;
-    //       }
-    //   }
-
-    //   return false;
-    // }
-
-    // chrome.tabs.query({}, function(tabs) {
-    // });
     return w.tabs.filter(w.notInternalTab);
+  };
+
+  //hack since there are new tabs being created that don't exist
+  w.removeUnkownTabs = function (){
+     chrome.tabs.query({}, function(tabs) {
+      var tabsToRemove = [];
+      w.tabs.forEach(function (tab, index, internalTabs){
+        function containsTab(tab, tabs) {
+ 
+            var i;
+            for (i = 0; i < tabs.length; i++) {
+                if (tabs[i].id === tab.id) {
+                    return true;
+                }
+            }
+            return false;
+        }
+ 
+        if (!tab || (tab.title === 'New Tab' && !containsTab(tab, tabs))) {
+          tabsToRemove.push(tab);
+        }
+      });
+ 
+      tabsToRemove.forEach(function(tab){
+        var index = indexOfTab(tab.id);
+        if (index >= 0){
+          w.tabs.splice(index, 1);
+        }
+      });
+ 
+      if (tabsToRemove.length > 0){
+        chrome.runtime.sendMessage({ event: 'Update', tabs: w.tabs,
+          highlightedId : w.tabs[1]? w.tabs[1].id : w.tabs[0].id });
+      }
+ 
+    });
   };
 
   w.getTabs();
@@ -76,7 +98,7 @@
       if (index >= 0){
         w.tabs.splice(index, 1);
       }
-      // chrome.runtime.sendMessage({ event: 'tabRemoved', tabId: tabId });
+      chrome.runtime.sendMessage({ event: 'tabRemoved', tabId: tabId });
   });
 
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -86,7 +108,7 @@
     } else {
       w.tabs.push(tab);
     }
-    // chrome.runtime.sendMessage({ event: 'tabUpdated', tab: tab });
+    chrome.runtime.sendMessage({ event: 'tabUpdated', tab: tab });
   });
 
   chrome.tabs.onActivated.addListener(function(activeInfo) {
