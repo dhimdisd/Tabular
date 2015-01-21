@@ -82,7 +82,6 @@ module.exports = React.createClass({
           window.close();
         }
       } else if (request.event === 'Update'){
-        console.log('Im updating the tabs');
         var state = { tabs: request.tabs };
         if (request.highlightedId){
           state.highlightedId = request.highlightedId;
