@@ -12,7 +12,7 @@ module.exports = React.createClass({
   getInitialState: function() {
     
     bp.removeUnkownTabs();
-    var tabs = bp.getFilteredTabs();
+    var tabs = bp.tabs;
     
 
     return {

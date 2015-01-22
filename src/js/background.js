@@ -27,7 +27,7 @@
     chrome.tabs.query({}, function(tabs) {
       w.tabs =
         tabs
-          // .filter(notInternalTab)
+           .filter(notInternalTab)
           .sort(function(a, b) {
             return b.index - a.index;
           });
@@ -58,12 +58,11 @@
         }
  
         if (!tab || (tab.title === 'New Tab' && !containsTab(tab, tabs))) {
-          tabsToRemove.push(tab);
+          tabsToRemove.push(index);
         }
       });
  
-      tabsToRemove.forEach(function(tab){
-        var index = indexOfTab(tab.id);
+      tabsToRemove.forEach(function(index){
         if (index >= 0){
           w.tabs.splice(index, 1);
         }
@@ -89,8 +88,8 @@
   }
 
   chrome.tabs.onCreated.addListener(function(tab) {
-    //We should probably check if tab exist in the list
-      w.tabs.unshift(tab);
+      if(!isInternalTab(tab))
+        w.tabs.unshift(tab);
   });
 
   chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
@@ -106,7 +105,8 @@
     if (index >= 0){
       w.tabs[index] = tab;
     } else {
-      w.tabs.push(tab);
+      if (!isInternalTab(tab))
+        w.tabs.push(tab);
     }
     chrome.runtime.sendMessage({ event: 'tabUpdated', tab: tab });
   });
@@ -119,7 +119,7 @@
       tabs.unshift(tab);
     } else {
       chrome.tabs.get(activeInfo.tabId, function(tab) {
-        if(tab)
+        if(tab && !isInternalTab(tab))
           w.tabs.unshift(tab);
       });
     }
