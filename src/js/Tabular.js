@@ -11,7 +11,7 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     
-    bp.removeUnkownTabs();
+    
     var tabs = bp.tabs;
     
 
@@ -86,9 +86,11 @@ module.exports = React.createClass({
         if (request.highlightedId){
           state.highlightedId = request.highlightedId;
         }
-        _this.setState(state); 
+        _this.setState(state);
       }
     });
+
+    bp.removeUnkownTabs();
   },
 
   componentWillUnmount: function() {

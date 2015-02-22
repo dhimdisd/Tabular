@@ -44,7 +44,7 @@
   //hack since there are new tabs being created that don't exist
   w.removeUnkownTabs = function (){
      chrome.tabs.query({}, function(tabs) {
-      var tabsToRemove = [];
+      var newTabs = [];
       w.tabs.forEach(function (tab, index, internalTabs){
         function containsTab(tab, tabs) {
  
@@ -58,17 +58,15 @@
         }
  
         if (!tab || (tab.title === 'New Tab' && !containsTab(tab, tabs))) {
-          tabsToRemove.push(index);
+          
+        }else{
+          newTabs.push(tab);
         }
       });
  
-      tabsToRemove.forEach(function(index){
-        if (index >= 0){
-          w.tabs.splice(index, 1);
-        }
-      });
+      w.tabs = newTabs;
  
-      if (tabsToRemove.length > 0){
+      if (newTabs.length > 0){
         chrome.runtime.sendMessage({ event: 'Update', tabs: w.tabs,
           highlightedId : w.tabs[1]? w.tabs[1].id : w.tabs[0].id });
       }
@@ -131,6 +129,18 @@
       chrome.windows.remove(w.popupWindowId, function() {
         if (!chrome.runtime.lastError)
           w.popupWindowId = null;
+      });
+    }
+    if (windowId != chrome.windows.WINDOW_ID_NONE) {
+      chrome.tabs.query({windowId:windowId, active:true}, function (tabArray) {
+         for(var j = 0; j < tabArray.length; j++) {
+           var idx = indexOfTab(tabArray[j].id);
+           if(idx >= 0) {
+             var tab = w.tabs[idx];
+             w.tabs.splice(idx, 1);
+             w.tabs.unshift(tab);
+           }
+         }
       });
     }
   });
