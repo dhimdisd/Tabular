@@ -13,10 +13,11 @@
   }
 
   w.removeTab = function (tabId){
-    for (var i = 0; i < w.tabs.length; i++) {
+    var i = w.tabs.length;
+    while(i--) 
+    {
       if (tabId === w.tabs[i].id) {
         w.tabs.splice(i, 1);
-        break;
       }
     }
   };
@@ -153,11 +154,19 @@
 
   //Listens for Key to popup app
   chrome.commands.onCommand.addListener(function(command) {
-    var width = 450;
-    var platformRgx = new RegExp('win', 'i');
-    if (platformRgx.test(navigator.platform)) {
-      width = 480;
-    }
+    var width = 450,
+      height = 600,
+      left = (screen.width/ 2) - (width/ 2),
+      top = (screen.height/ 2) - (height/ 2);
+
+      if(w.screenX) {
+        left += w.screenX;
+      }
+
+    // var platformRgx = new RegExp('win', 'i');
+    // if (platformRgx.test(navigator.platform)) {
+    //   width = 480;
+    // }
     if (command === 'showTabularPopup') {
       if (w.popupWindowId == null) {
         chrome.windows.create({
@@ -165,9 +174,9 @@
           type: 'popup',
           focused: true,
           width: width,
-          height: 600,
-          left: (screen.width / 2) - (width / 2),
-          top: (screen.height / 2) - 300
+          height: height,
+          left: left,
+          top:  top
         }, function(popupWindow) {
           w.popupWindowId = popupWindow.id;
         });

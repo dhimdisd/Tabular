@@ -122,11 +122,12 @@ module.exports = React.createClass({
             'highlighted': true
           }, function() {
             if (chrome.runtime.lastError) {
-              for (var i = 0; i < bp.tabs.length; i++) {
-                if (!bp.tabs[i] || id === bp.tabs[i].id) {
+
+              var i = bp.tabs.legnth;
+              while(i--) 
+              {
+                if (id === bp.tabs[i].id) {
                   bp.tabs.splice(i, 1);
-                  if (bp.tabs[i])
-                    break;
                 }
               }
             }
@@ -136,11 +137,12 @@ module.exports = React.createClass({
           });
         }
         else{
-          for (var i = 0; i < bp.tabs.length; i++) {
-            if (!bp.tabs[i] || id === bp.tabs[i].id) {
+
+          var i = bp.tabs.legnth;
+          while(i--) 
+          {
+            if (id === bp.tabs[i].id) {
               bp.tabs.splice(i, 1);
-              if(bp.tabs[i])
-                break;
             }
           }
         }
